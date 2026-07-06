@@ -1,0 +1,153 @@
+---
+title: "The Wisdom and Madness of Crowds"
+subtitle: "RIKEN Wako Science Camp 2026 — Day 3"
+author: "Computational Collective Dynamics Unit, RIKEN CBS"
+format:
+  revealjs:
+    theme: [default]
+    slide-number: true
+    embed-resources: true
+    transition: slide
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+## Yesterday {.center}
+
+You built an agent that **learns alone**.
+
+Today: agents that **watch each other**.
+
+Spoiler: societies appear — with all their glory and their bugs.
+
+## Why copy others?
+
+New town, hungry. One ramen shop has a queue, one is empty.
+
+::: {.fragment}
+Other people's choices carry **information**.
+
+Copying is often *smart* — humans are champions of
+**social learning**（社会学習）. It gave us culture,
+language, science... and TikTok.
+:::
+
+## Two knobs of a social learner
+
+$$p(\text{choice}) = (1-\sigma)\, p_{\text{own experience}} + \sigma\, p_{\text{copy others}}$$
+
+- $\sigma$ (sigma): **how much** to rely on others (0 → 1)
+- $\theta$ (theta): **how strongly** to follow majorities
+  - $\theta = 1$: copy in proportion
+  - $\theta > 1$: **conformity** — exaggerate the majority
+
+::: {.fragment}
+Different values = different *social strategies*.
+Which strategy is the smartest?
+:::
+
+## 1906: the ox and the crowd
+
+At a fair, ~800 people guessed the weight of an ox.
+
+Nearly everyone was wrong...
+
+::: {.fragment}
+...but the **average of all guesses** was off by **less than 1%**.
+
+**Wisdom of crowds**: independent errors point in different
+directions and *cancel out*.
+:::
+
+## Copying makes a group smarter...
+
+```{r}
+#| fig-height: 4.5
+source("R/bandit_functions.R")
+library(ggplot2)
+set.seed(7)
+mix <- do.call(rbind, lapply(c(0, 0.6), function(s) {
+  perf <- average_performance(n_reps = 25, n_agents = 10, n_trials = 100,
+                              sigma = s, theta = 2)
+  transform(perf, society = ifelse(s == 0, "no copying (sigma=0)", "copying (sigma=0.6)"))
+}))
+ggplot(mix, aes(trial, correct, color = society)) +
+  geom_line(linewidth = 1.2) + ylim(0, 1) +
+  labs(y = "fraction choosing better option") +
+  theme_minimal(base_size = 18) + theme(legend.position = "bottom")
+```
+
+Good discoveries spread; individual mistakes get filtered out.
+
+## ...until the world changes
+
+```{r}
+#| fig-height: 4.5
+set.seed(11)
+sweep <- do.call(rbind, lapply(c(0, 0.9), function(s) {
+  perf <- average_performance(n_reps = 25, n_agents = 10, n_trials = 150,
+                              sigma = s, theta = 2, change_point = 76)
+  transform(perf, society = ifelse(s == 0, "individual learners", "heavy copiers (sigma=0.9)"))
+}))
+ggplot(sweep, aes(trial, correct, color = society)) +
+  geom_line(linewidth = 1.2) +
+  geom_vline(xintercept = 75.5, linetype = "dashed") +
+  ylim(0, 1) +
+  labs(y = "fraction choosing (currently) best option",
+       caption = "dashed line: the best option secretly swaps") +
+  theme_minimal(base_size = 18) + theme(legend.position = "bottom")
+```
+
+## Herding（付和雷同）
+
+After the change, heavy copiers keep choosing the **old** best option.
+
+Everyone copies everyone; the majority feeds on itself.
+
+::: {.incremental}
+- fashion bubbles 👟
+- stock market crashes 📉
+- misinformation cascades 📱
+:::
+
+::: {.fragment}
+**Same strategy. Different environment. Opposite result.**
+:::
+
+## This is real science, done here
+
+Real people played this game in groups, online
+(Toyokawa, Whalen & Laland 2019, *Nature Human Behaviour*):
+
+- moderate copying → collective intelligence ✅
+- strong conformity + changing world → herding ❌
+
+::: {.fragment}
+Today, **you** run this research program —
+with your own questions.
+:::
+
+## Your mission (until tomorrow)
+
+1. **Play the game yourselves** — `R/play_bandit_game.R`
+   (solo, then with social hints). You are the data! 📊
+2. **Pick a question** from `project/mini_project_menu.md`
+   (or invent your own)
+3. **Simulate, plot, interpret**
+4. Tonight: build slides. Tomorrow: **present like scientists**
+
+## A good 10-minute talk
+
+1. The question — *why is it interesting?* (2 min)
+2. The model — *the rules of your toy world* (2 min)
+3. What you did (1 min)
+4. Results — *1–2 clear figures* (3 min)
+5. What it means + what you'd do next (2 min)
+
+::: {.fragment}
+Template ready for you: `slides/final_presentation_template.qmd`
+
+**Go! 🚀**
+:::

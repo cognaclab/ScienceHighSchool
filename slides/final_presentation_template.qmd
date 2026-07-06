@@ -1,0 +1,95 @@
+---
+title: "OUR TITLE HERE"
+subtitle: "RIKEN Wako Science Camp 2026"
+author: "Student A, Student B, Student C, Student D"
+format:
+  revealjs:
+    theme: [default]
+    slide-number: true
+    embed-resources: true
+    transition: slide
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+<!--
+HOW TO USE THIS TEMPLATE
+1. Save a copy as  slides/our_presentation.qmd
+2. Replace the title and author line above
+3. Fill in each slide (delete our hint comments)
+4. Click "Render" in RStudio to make the slideshow
+5. Practice! 10 minutes talk + 5 minutes questions
+
+TIPS
+- Less text per slide = better slide
+- Every figure needs: axis labels + one sentence saying what it shows
+- It is YOUR story: "we predicted... we found... we were surprised..."
+- One fun slide about camp life at the end is a tradition!
+-->
+
+## Our question {.center}
+
+<!-- One sentence. Big font. Why did it interest you? -->
+
+*(example: "When does copying friends make a group smarter?")*
+
+## The world we built
+
+<!-- Explain your model LIKE A GAME:
+     - what can agents choose?
+     - what do they know?
+     - what are the rules? (learning, copying)
+     Use a drawing or diagram if you can! -->
+
+- Agents choose between ___ slot machines
+- They learn from rewards (learning rate $\alpha$)
+- They can see what others chose ($\sigma$ = how much they copy)
+
+## What we did
+
+<!-- Your simulation experiment in 3 bullets:
+     what did you vary? what did you measure? how many repetitions? -->
+
+- We varied: ___
+- We measured: ___
+- We repeated each setting ___ times
+
+## Our prediction
+
+<!-- What did you THINK would happen, before running it?
+     Being wrong is 100% okay - surprises are the best part of science -->
+
+## Results
+
+<!-- Put your main figure here! To include a saved figure:
+
+![](../figs/our_result.png)
+
+Or generate it live by putting your R code in a chunk
+(change ```r to ```{r} to make it run):
+
+```r
+source("R/bandit_functions.R")
+# ... your simulation + ggplot code ...
+```
+-->
+
+## What it means
+
+<!-- 2-3 bullets:
+     - answer to your question
+     - connection to real life (trends? rumours? markets?)
+     - what you would try next with more time -->
+
+## What we learned at RIKEN
+
+<!-- The human side: lab visits, lunch discoveries, favourite moments.
+     Photos welcome! -->
+
+## Thank you! {.center}
+
+<!-- names + one line each: "my favourite part was..." -->
+
+**Questions welcome!**

@@ -1,0 +1,6 @@
+project:
+  title: "RIKEN Science Camp 2026 — Collective Behaviour"
+  execute-dir: project
+  render:
+    - tutorials/
+    - slides/

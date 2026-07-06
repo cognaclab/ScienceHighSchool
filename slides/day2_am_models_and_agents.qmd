@@ -1,0 +1,133 @@
+---
+title: "Simulating Societies"
+subtitle: "RIKEN Wako Science Camp 2026 — Day 2 morning"
+author: "Computational Collective Dynamics Unit, RIKEN CBS"
+format:
+  revealjs:
+    theme: [default]
+    slide-number: true
+    embed-resources: true
+    transition: slide
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+## Welcome! ようこそ！ {.center}
+
+**You + us, 3 days, one goal:**
+
+build a tiny society inside a computer —
+and present what it teaches us about *real* people
+
+::: {.fragment}
+(Yes, in English. Yes, you can do it. 😉)
+:::
+
+## Who we are
+
+:::: {.columns}
+::: {.column width="50%"}
+**Computational Collective Dynamics Unit**
+RIKEN Center for Brain Science
+
+We study how *groups* of humans and
+animals learn and decide together.
+:::
+::: {.column width="50%"}
+<!-- TODO: add instructor names + photos -->
+- Wataru Toyokawa (unit leader)
+- Henri —
+- Alex —
+- Mori —
+- Nakata —
+:::
+::::
+
+## Groups do amazing things
+
+- A school of fish turns as one — **no leader**
+- Ants find the shortest path to food — **no map**
+- A crowd guesses the weight of an ox better than any expert
+- A silly dance spreads to 100 million people in a week
+
+::: {.fragment}
+**Nobody is in charge. So who decides?**
+:::
+
+## The puzzle of collective behaviour
+
+Individual rules → group patterns
+
+| Individual does... | The group shows... |
+|---|---|
+| follow your neighbour | flocking, waves |
+| join the longer queue | traffic jams, viral trends |
+| copy the majority | fashion, bubbles, culture |
+
+The group behaviour is not written anywhere —
+it **emerges**（創発する）.
+
+## How can we study this?
+
+Watching groups is not enough — we need to know **why**.
+
+::: {.incremental}
+- Can't interview a fish 🐟
+- Can't rewind a stock market crash ⏪
+- Can't ask 1000 people to repeat their lives 100 times
+:::
+
+::: {.fragment}
+**Solution: build the society ourselves — in a computer.**
+:::
+
+## What is a model?
+
+A map of Tokyo is not Tokyo.
+
+It is *useful because* it leaves things out.
+
+::: {.fragment}
+A **model** = a deliberately simplified world
+keeping only what we care about
+
+A **simulation** = pressing **play** on a model
+:::
+
+## The plan for these two days
+
+| | |
+|---|---|
+| **Today AM** | learn R, build toy worlds (coins, random walks) |
+| **Today PM** | build an agent that *learns* |
+| **Tomorrow AM** | let agents *copy each other* — societies! |
+| **Tomorrow PM** | your own research project |
+| **Day 4** | you present — like real scientists |
+
+## Our lab language: R
+
+- Free software used by scientists everywhere
+- You type commands, R answers, draws, simulates
+
+```{r}
+#| echo: true
+sample(1:6, size = 10, replace = TRUE)   # R rolls 10 dice
+```
+
+::: {.fragment}
+Every simulation this week is built from
+little pieces of randomness like this.
+:::
+
+## Rules of the camp lab
+
+1. **Type it yourself** — copy-paste teaches nothing
+2. **Predict before you run** — then be surprised
+3. **Errors are normal** — red text happens to professionals daily
+4. **Ask anything** — asking is what researchers do all day
+
+::: {.fragment}
+**Let's start!** → open `tutorials/01_welcome_to_r.qmd`
+:::

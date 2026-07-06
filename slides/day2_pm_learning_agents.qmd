@@ -1,0 +1,134 @@
+---
+title: "An Agent That Learns"
+subtitle: "RIKEN Wako Science Camp 2026 — Day 2 afternoon"
+author: "Computational Collective Dynamics Unit, RIKEN CBS"
+format:
+  revealjs:
+    theme: [default]
+    slide-number: true
+    embed-resources: true
+    transition: slide
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+## The slot machine problem {.center}
+
+Two machines. One pays 30%, one pays 70%.
+
+**You don't know which is which. 100 turns.**
+
+What do you do?
+
+## You face this problem every day
+
+- New restaurant, or your favourite one?
+- New song, or your playlist?
+- New study method, or the usual one?
+
+::: {.fragment}
+**Explore**（探索）or **exploit**（活用）?
+
+This is the *multi-armed bandit problem* —
+studied in psychology, neuroscience, economics, and AI.
+:::
+
+## Let's build a mind (a small one)
+
+Our agent needs only two abilities:
+
+1. **Remember** how good each option seems → a value $Q$ per option
+2. **Update** that memory after every experience
+
+$$Q_{\text{new}} = Q_{\text{old}} + \alpha \, (\text{reward} - Q_{\text{old}})$$
+
+::: {.fragment}
+$(\text{reward} - Q)$ = **prediction error** = "how surprised am I?"
+
+$\alpha$ = **learning rate** = how much the newest experience counts
+:::
+
+## Fun fact: your brain does this
+
+Dopamine neurons（ドーパミン神経細胞）fire in proportion to
+**prediction error** — not to reward itself.
+
+Surprising win → big signal.
+Expected win → almost nothing.
+
+::: {.fragment}
+This simple equation helped neuroscientists
+*decode what dopamine means*.
+Simple models can be powerful.
+:::
+
+## From values to choices: softmax
+
+Always pick the best-looking option? Then you never fix your mistakes.
+
+**Softmax rule:** mostly pick the best, sometimes explore.
+
+- $\beta$ small → curious, random
+- $\beta$ big → greedy, confident
+
+::: {.fragment}
+Two numbers, $\alpha$ and $\beta$ = the agent's **personality**
+:::
+
+## The whole agent
+
+```r
+for (t in 1:100) {
+  p      <- softmax(Q, beta)              # how attractive is each option?
+  choice <- sample(1:2, 1, prob = p)      # pick one
+  reward <- rbinom(1, 1, probs[choice])   # world responds
+  Q[choice] <- Q[choice] +
+               alpha * (reward - Q[choice])  # learn from surprise
+}
+```
+
+**A learning mind in ~6 lines.**
+
+## What 1000 agents look like
+
+```{r}
+#| fig-height: 4.5
+source("R/bandit_functions.R")
+library(ggplot2)
+set.seed(1)
+many <- do.call(rbind, lapply(1:400, function(i) simulate_learner()))
+curve <- aggregate(chose_best ~ trial,
+                   data = transform(many, chose_best = as.numeric(choice == 2)),
+                   FUN = mean)
+ggplot(curve, aes(trial, chose_best)) +
+  geom_line(linewidth = 1.2, color = "steelblue") +
+  geom_hline(yintercept = 0.5, linetype = "dashed") +
+  ylim(0, 1) +
+  labs(x = "trial", y = "fraction choosing better option") +
+  theme_minimal(base_size = 18)
+```
+
+The same curve appears in humans, monkeys, pigeons, bees...
+
+## Your turn
+
+Open `tutorials/03_learning_agents.qmd` and build this agent yourself.
+
+Then experiment:
+
+- a very slow learner ($\alpha = 0.05$)?
+- a goldfish-memory learner ($\alpha = 1$)?
+- a completely random agent ($\beta = 0$)?
+- a *hard* world (45% vs 55%)?
+
+**Predict first. Then run.**
+
+## Where this is going {.center}
+
+Today your agent learns **alone**.
+
+Tomorrow morning, agents will start **watching each other** —
+
+and everything gets more interesting.

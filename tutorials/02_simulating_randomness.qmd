@@ -1,0 +1,172 @@
+---
+title: "Tutorial 2: Building Toy Worlds"
+subtitle: "What a simulation is, and why scientists trust dice"
+format:
+  html:
+    toc: true
+    embed-resources: true
+    theme: cosmo
+execute:
+  warning: false
+  message: false
+---
+
+::: {.callout-note}
+## Word list（単語リスト）
+
+| English | 日本語 | Meaning |
+|---|---|---|
+| simulation | シミュレーション | letting a model "run" inside a computer |
+| model | モデル | a simplified copy of something real |
+| probability | 確率 | how likely something is (0 = never, 1 = always) |
+| loop | ループ・繰り返し | telling R to repeat something many times |
+| random walk | ランダムウォーク | a path built from random steps |
+:::
+
+## What is a model?
+
+A map of Tokyo is not Tokyo. It leaves out almost everything —
+and that's exactly why it is useful.
+
+A **model** is the same idea in science: a simplified copy of the real
+world that keeps only the parts we care about. A **simulation** is what
+happens when we let a model run inside a computer, like pressing "play".
+
+This week our models will be about **people (and animals) learning and
+copying each other**. But first, let's build the simplest possible toy world.
+
+## Experiment 1: How fair is a coin?
+
+If you flip a fair coin 10 times, do you get exactly 5 heads?
+
+```{r}
+flips <- sample(c(1, 0), size = 10, replace = TRUE)  # 1 = heads, 0 = tails
+flips
+sum(flips)   # how many heads?
+```
+
+Run this a few times. Sometimes 3 heads, sometimes 7...
+Now the magic of simulation: **we don't have to flip by hand.**
+
+```{r}
+n_heads <- replicate(10000, sum(sample(c(1, 0), size = 10, replace = TRUE)))
+```
+
+`replicate(10000, ...)` repeats our little experiment **ten thousand times**
+and collects the results. Let's see them all:
+
+```{r}
+library(ggplot2)
+ggplot(data.frame(n_heads), aes(x = n_heads)) +
+  geom_bar(fill = "tomato") +
+  scale_x_continuous(breaks = 0:10) +
+  labs(title = "10,000 repetitions of '10 coin flips'",
+       x = "number of heads", y = "count")
+```
+
+::: {.callout-tip}
+## Try it! — how surprising is 9 heads?
+
+Using the vector `n_heads`:
+
+```r
+mean(n_heads >= 9)
+```
+
+This computes the fraction of experiments with 9 or 10 heads.
+If a friend flips 10 coins and gets 9 heads, should you suspect a trick coin?
+
+*(This — estimating a probability by simulating many times — is called the
+**Monte Carlo method**. Real researchers use it constantly.)*
+:::
+
+## Experiment 2: More flips, more truth
+
+```{r}
+flip_average <- function(n_flips) {
+  mean(sample(c(1, 0), size = n_flips, replace = TRUE))
+}
+
+results <- data.frame(
+  n = c(10, 100, 1000, 10000),
+  proportion_heads = c(flip_average(10), flip_average(100),
+                       flip_average(1000), flip_average(10000))
+)
+results
+```
+
+Small samples are wild; big samples settle near 0.5.
+This is the **law of large numbers** — and it is one reason why
+*averaging many opinions* can be powerful. Remember this for Day 3:
+it is the secret behind the "wisdom of crowds".
+
+## Writing our own function
+
+We just did something important: we wrote our **own function**,
+`flip_average()`. A function is a recipe:
+
+```r
+name <- function(ingredients) {
+  ... what to do ...
+}
+```
+
+From now on we will build all our models as functions.
+
+## Experiment 3: The random walk
+
+Imagine a person standing on a line. Every second they flip a coin:
+heads → one step right (+1), tails → one step left (−1).
+Where are they after 100 steps?
+
+```{r}
+steps <- sample(c(1, -1), size = 100, replace = TRUE)
+position <- cumsum(steps)   # cumulative sum: position after each step
+ggplot(data.frame(time = 1:100, position), aes(time, position)) +
+  geom_line(color = "steelblue") +
+  labs(title = "A random walk")
+```
+
+Run it again — a completely different path every time!
+Now let's watch **20 walkers at once**:
+
+```{r}
+random_walk <- function(n_steps = 100) {
+  cumsum(sample(c(1, -1), size = n_steps, replace = TRUE))
+}
+
+walks <- data.frame(
+  time = rep(1:100, times = 20),
+  position = unlist(lapply(1:20, function(i) random_walk(100))),
+  walker = rep(1:20, each = 100)
+)
+
+ggplot(walks, aes(time, position, group = walker)) +
+  geom_line(alpha = 0.4, color = "steelblue") +
+  labs(title = "20 random walkers")
+```
+
+Each walker is different, but the *crowd* of walkers has a clear shape:
+it spreads out like a fan. **Individual randomness, collective pattern.**
+That is the core idea of everything we do this week.
+
+::: {.callout-tip}
+## Try it! — biased walkers
+
+1. Change the walk so that steps are `+1` with probability 0.6 and `-1`
+   with probability 0.4 (hint: `prob = c(0.6, 0.4)` inside `sample()`).
+2. Plot 20 of these walkers. What changed about the fan?
+3. A stock price, a drunk person, an animal searching for food —
+   which of these could a random walk be a model of? What does the model
+   *leave out* in each case?
+:::
+
+## What you learned
+
+- A **model** is a deliberately simplified toy world; a **simulation** runs it
+- `replicate()` and functions let us repeat experiments thousands of times
+- Small samples lie; large samples tell the truth (law of large numbers)
+- Simple random rules can create clear collective patterns
+
+Next tutorial: our toy world gets its first **inhabitant** — an agent
+that can *learn*.

@@ -1,0 +1,24 @@
+# private notes (internal correspondence) - do not commit
+notes/
+
+# student data may contain names - review before ever committing
+data/game_records/
+
+# R
+.Rproj.user/
+.Rhistory
+.RData
+.Rdata
+
+# Quarto / rendered output
+.quarto/
+/_site/
+*_files/
+tutorials/*.html
+slides/*.html
+
+# OS
+.DS_Store
+
+/.quarto/
+**/*.quarto_ipynb

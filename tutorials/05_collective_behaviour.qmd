@@ -1,0 +1,214 @@
+---
+title: "Tutorial 5: The Wisdom and Madness of Crowds"
+subtitle: "When groups are smarter than individuals — and when they are not"
+format:
+  html:
+    toc: true
+    embed-resources: true
+    theme: cosmo
+execute:
+  warning: false
+  message: false
+---
+
+::: {.callout-note}
+## Word list（単語リスト）
+
+| English | 日本語 | Meaning |
+|---|---|---|
+| wisdom of crowds | 集団の知恵 | groups being more accurate than individuals |
+| herding | 群れ行動・付和雷同 | everyone following everyone, ignoring evidence |
+| collective behaviour | 集団行動 | patterns produced by many interacting individuals |
+| environment change | 環境変化 | when the best option stops being the best |
+| trade-off | トレードオフ | improving one thing makes another worse |
+:::
+
+## Part 1: The wisdom of crowds
+
+In 1906, the scientist Francis Galton visited a country fair where ~800
+people guessed the weight of an ox. Almost nobody was right. But the
+**average of all guesses** missed the true weight by less than 1%.
+
+Why does this work? Let's simulate it. Say the true answer is 500
+(beans in a jar, weight of an ox, whatever). Each person's guess is
+noisy — sometimes too high, sometimes too low:
+
+```{r}
+library(ggplot2)
+set.seed(2026)
+
+truth <- 500
+guesses <- rnorm(800, mean = truth, sd = 150)  # 800 noisy guesses
+
+ggplot(data.frame(guesses), aes(guesses)) +
+  geom_histogram(bins = 40, fill = "steelblue") +
+  geom_vline(xintercept = truth, color = "red", linewidth = 1) +
+  geom_vline(xintercept = mean(guesses), color = "gold2", linewidth = 1) +
+  labs(title = "800 noisy guesses (red = truth, yellow = crowd average)")
+```
+
+Individual errors are huge, but they point in *different directions* —
+so when we average, they **cancel out**. How big must a crowd be?
+
+```{r}
+crowd_error <- function(n_people) {
+  mean(replicate(1000, abs(mean(rnorm(n_people, truth, sd = 150)) - truth)))
+}
+sizes <- c(1, 2, 5, 10, 25, 50, 100, 400)
+errors <- sapply(sizes, crowd_error)
+
+ggplot(data.frame(sizes, errors), aes(sizes, errors)) +
+  geom_line(color = "steelblue") + geom_point(size = 2) +
+  labs(title = "Crowd size vs average error",
+       x = "number of people (log scale)", y = "average error") +
+  scale_x_log10()
+```
+
+::: {.callout-tip}
+## Try it! — break the wisdom
+
+The magic needs errors that cancel out. Make everyone share the *same bias*:
+
+```r
+guesses <- rnorm(800, mean = truth * 0.7, sd = 150)  # everyone guesses low
+```
+
+How wrong is the crowd average now? Can more people fix a shared bias?
+
+*This is why copying is dangerous: it makes people's errors similar.*
+:::
+
+## Part 2: When the world changes
+
+Yesterday our copying societies looked smart. But we tested them in a
+**stable world**, where the best option stays best forever.
+Real worlds change: shops close, trends die, environments shift.
+
+`simulate_group()` can change the world in the middle:
+at `change_point = 76`, machines secretly **swap**
+(A becomes the good one!). Nobody is told.
+
+```{r}
+source("R/bandit_functions.R")
+set.seed(2026)
+
+sim <- simulate_group(n_agents = 10, n_trials = 150,
+                      sigma = 0.9, theta = 2,     # a society of heavy copiers
+                      change_point = 76)
+
+ggplot(sim, aes(trial, agent, fill = factor(choice))) +
+  geom_tile() +
+  geom_vline(xintercept = 75.5, color = "red", linewidth = 1) +
+  scale_fill_manual(values = c("1" = "grey80", "2" = "seagreen"),
+                    name = "choice") +
+  scale_y_continuous(breaks = 1:10) +
+  labs(title = "Heavy copiers in a changing world (world flips at red line)")
+```
+
+Look at what happens after the red line. The group often **keeps choosing
+the old option** — everyone copies everyone, and the majority feeds on
+itself. This is **herding**. (If your plot shows the group escaping,
+run it again a few times — sometimes they escape, often they get stuck.)
+
+## Part 3: The full picture
+
+Let's measure this properly: for several values of $\sigma$, average
+many simulations, in a world that flips halfway.
+
+```{r}
+#| cache: true
+sweep <- do.call(rbind, lapply(c(0, 0.3, 0.6, 0.9), function(s) {
+  perf <- average_performance(n_reps = 40, n_agents = 10, n_trials = 150,
+                              sigma = s, theta = 2, change_point = 76)
+  transform(perf, sigma = s)
+}))
+
+ggplot(sweep, aes(trial, correct, color = factor(sigma))) +
+  geom_line(linewidth = 1) +
+  geom_vline(xintercept = 75.5, linetype = "dashed") +
+  ylim(0, 1) +
+  labs(title = "The wisdom AND madness of crowds",
+       y = "fraction choosing the (currently) best option",
+       color = expression(sigma))
+```
+
+Read this plot slowly — it is the punchline of the whole camp:
+
+- **Before the change**: copiers ($\sigma = 0.3, 0.6$) beat individual
+  learners ($\sigma = 0$). *Wisdom of crowds.*
+- **After the change**: heavy copiers ($\sigma = 0.9$) crash and often never
+  recover. *Madness of crowds.* Individual learners adapt fastest.
+- **Moderate copiers** get most of the wisdom with little of the madness.
+
+One parameter, $\sigma$, moves a society between collective intelligence
+and collective stupidity. Fashion bubbles, stock-market crashes, and
+misinformation cascades all rhyme with this simple model.
+
+::: {.callout-note}
+Researchers at RIKEN and elsewhere have tested exactly this with real
+people playing bandit games in groups online — and found the same pattern:
+conformist copying produces both collective wisdom and, in changing
+environments, herding. See Toyokawa, Whalen & Laland (2019),
+*Nature Human Behaviour* — ask your instructors about it!
+:::
+
+::: {.callout-tip}
+## Try it! — questions worth investigating
+
+Each of these could become part of your **final presentation**:
+
+1. **Best strategy in a restless world**: make the world flip every 50
+   trials (`change_point` currently supports one flip — can you modify
+   `simulate_group()` for repeated flips? Ask us for hints!).
+   What $\sigma$ wins now?
+2. **Group size**: is herding worse in bigger groups? Try
+   `n_agents = 5, 20, 50` with $\sigma = 0.6$.
+3. **Conformity strength**: fix $\sigma = 0.5$ and sweep
+   `theta = 1, 2, 4`. Is strong conformity ever good?
+:::
+
+## Part 4: From models to real behaviour — you are the data
+
+Models are only half of science. The other half: **data from real people**.
+Conveniently, four real people are attending this camp.
+
+Play the slot-machine game (each person, solo first, then with hints):
+
+```r
+source("R/play_bandit_game.R")
+play_game("YourName")               # solo
+play_game("YourName", hints = TRUE) # with social information
+```
+
+Your choices are saved in `data/game_records/`. Then compare **your**
+learning curve with the model's:
+
+```{r}
+#| eval: false
+files <- list.files("data/game_records", full.names = TRUE)
+human <- do.call(rbind, lapply(files, read.csv))
+
+# machine 2 pays best (0.65) - how often did humans find it?
+human_curve <- aggregate(found_best ~ trial,
+                         data = transform(human, found_best = as.numeric(choice == 2)),
+                         FUN = mean)
+plot(human_curve, type = "l", ylim = c(0, 1),
+     main = "Did WE find the best machine?")
+```
+
+Questions you can now investigate like a real cognitive scientist:
+
+- Do humans learn faster or slower than the model? What $\alpha$ and $\beta$
+  make the model *most human-like*?
+- Did players with social hints do better than solo players?
+- Did anyone show conformity — following hints even after bad experiences?
+
+## What you learned
+
+- Independent errors cancel: crowds can be wiser than any individual
+- Copying makes errors *dependent* — herding in changing worlds
+- The same strategy can be smart or disastrous depending on the environment
+- Models become science when compared with real behaviour — including yours
+
+**Now: pick a question, run simulations, make figures, and build your
+presentation.** See [`project/mini_project_menu.md`](../project/mini_project_menu.md).
