@@ -1,7 +1,7 @@
 ---
 title: "An Agent That Learns"
 subtitle: "RIKEN Wako Science Camp 2026 — Day 2 afternoon"
-author: "Computational Collective Dynamics Unit, RIKEN CBS"
+author: "Computational Group Dynamics (COGNAC) Collaboration Unit, RIKEN CBS"
 format:
   revealjs:
     theme: [default]

@@ -1,7 +1,7 @@
 ---
 title: "Simulating Societies"
 subtitle: "RIKEN Wako Science Camp 2026 — Day 2 morning"
-author: "Computational Collective Dynamics Unit, RIKEN CBS"
+author: "Computational Group Dynamics (COGNAC) Collaboration Unit, RIKEN CBS"
 format:
   revealjs:
     theme: [default]
@@ -29,7 +29,7 @@ and present what it teaches us about *real* people
 
 :::: {.columns}
 ::: {.column width="50%"}
-**Computational Collective Dynamics Unit**
+**Computational Group Dynamics (COGNAC) Collaboration Unit**
 RIKEN Center for Brain Science
 
 We study how *groups* of humans and
