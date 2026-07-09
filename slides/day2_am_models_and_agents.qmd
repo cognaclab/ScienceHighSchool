@@ -37,11 +37,11 @@ animals learn and decide together.
 :::
 ::: {.column width="50%"}
 <!-- TODO: add instructor names + photos -->
-- Wataru Toyokawa (unit leader)
+- Wataru - 
 - Henri —
 - Alex —
-- Mori —
-- Nakata —
+- Rytaro —
+- Seiya —
 :::
 ::::
 
@@ -100,11 +100,12 @@ A **simulation** = pressing **play** on a model
 
 | | |
 |---|---|
-| **Today AM** | learn R, build toy worlds (coins, random walks) |
-| **Today PM** | build an agent that *learns* |
-| **Tomorrow AM** | let agents *copy each other* — societies! |
-| **Tomorrow PM** | your own research project |
-| **Day 4** | you present — like real scientists |
+| **Today** | learn R, build toy worlds (coins, random walks) |
+| **Tomorrow** | build an agent that *learns* |
+| **Day 3 AM** | let agents *copy each other* — culture and societies! |
+| **Day 3 PM** | group research project |
+| **Day 4 AM** | group research project |
+| **Day 4 PM** | you present — like real scientists |
 
 ## Our lab language: R
 

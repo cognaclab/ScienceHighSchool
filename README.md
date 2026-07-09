@@ -1,16 +1,16 @@
 # Simulating Societies 🐟🐜🧑‍🤝‍🧑
 
 **Tutorial materials for the RIKEN Wako Science Camp 2026**
-*Computational Collective Dynamics Unit, RIKEN Center for Brain Science*
+*Computational Group Dynamics (COGNAC) Collaboration Unit, RIKEN Center for Brain Science*
 
 A 3-day crash course for high-school students on **agent-based modelling of
-social learning and collective behaviour**, taught in English, using R.
+social learning and collective behaviour** using R.
 Students build learning agents from scratch, let them copy each other, discover
 the *wisdom and madness of crowds*, run a mini research project — and present
-it to RIKEN's president and directors.
+their new discoveries!
 
-- **When:** July 27–30, 2026 (teaching days: July 28–29)
-- **Who:** 4 first-year high-school students (no programming experience assumed)
+- **When:** 27–30 July, 2026 (core teaching/group work days: 28–29 July)
+- **Who:** High-school students (no advanced programming experience assumed)
 - **Language:** English (with Japanese word lists for key terms)
 
 ## Quick start (students)
@@ -36,7 +36,7 @@ it to RIKEN's president and directors.
 
 | # | Tutorial | Key idea | Camp slot |
 |---|---|---|---|
-| 1 | Welcome to R | variables, vectors, randomness | pre-camp / Day 2 AM |
+| 1 | Welcome to R | variables, vectors, randomness | pre-camp / Day 1 |
 | 2 | Building Toy Worlds | models, Monte Carlo, random walks | Day 2 AM |
 | 3 | An Agent That Learns | bandits, prediction error, explore–exploit | Day 2 PM |
 | 4 | Learning From Others | social learning strategies, conformity | Day 3 AM |
@@ -61,7 +61,7 @@ Rscript R/verify_simulations.R
 These materials are a high-school-level adaptation of ideas taught at the
 [COSMOS Summer School](https://cosmossummerschool.github.io/) (Computational
 Summer school on Modeling Social and collective behavior), co-organised with
-Charley Wu (University of Tübingen). COSMOS teaching notebooks are publicly
+Charley Wu (University of Tübingen/TU Darmstadt). COSMOS teaching notebooks are publicly
 available on the COSMOS website and are the recommended next step for
 students who want to go deeper.
 
