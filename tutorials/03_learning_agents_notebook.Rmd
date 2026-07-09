@@ -1,0 +1,220 @@
+---
+title: "Tutorial 3: An Agent That Learns (Interactive Notebook)"
+subtitle: "Slot machines, trial and error, and the explore–exploit dilemma"
+output:
+  html_notebook:
+    toc: true
+    theme: cosmo
+editor_options:
+  chunk_output_type: inline
+---
+
+::: {.callout-note}
+## How to use this notebook
+
+Open `ScienceHighSchool.Rproj` first. Run each code block with the green **Run** button, or place your cursor in the code and press **Cmd/Ctrl + Enter**.
+
+Change one small thing at a time. Then run the block again and look at the result.
+:::
+
+```{r setup, include=FALSE}
+project_root <- normalizePath("..")
+if (!file.exists(file.path(project_root, "ScienceHighSchool.Rproj"))) {
+  project_root <- getwd()
+}
+if (!file.exists(file.path(project_root, "ScienceHighSchool.Rproj"))) {
+  stop("Please open ScienceHighSchool.Rproj before running this notebook.")
+}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+knitr::opts_knit$set(root.dir = project_root)
+```
+
+
+::: {.callout-note}
+## Word list（単語リスト）
+
+| English | 日本語 | Meaning |
+|---|---|---|
+| agent | エージェント | a (simulated) individual that makes choices |
+| reward | 報酬 | the points/food/money an agent receives |
+| value estimate | 価値の推定 | the agent's guess about how good an option is |
+| learning rate | 学習率 | how quickly the agent updates its guess |
+| explore / exploit | 探索・活用 | try something new / stick with what works |
+:::
+
+## The slot machine problem
+
+Imagine two slot machines（スロットマシン）:
+
+- Machine A pays a coin **30%** of the time
+- Machine B pays a coin **70%** of the time
+
+You do **not** know these numbers. You have 100 turns.
+How do you find the good machine — and how do you get rich?
+
+This is called the **multi-armed bandit problem**, and it is one of the
+most famous problems in psychology, neuroscience, and AI. New restaurant
+or favourite restaurant? New song or favourite playlist? Same problem:
+**explore** or **exploit**?
+
+Today we build an **agent**: a small simulated creature that faces this
+problem and *learns from experience*.
+
+## Idea 1: keep a value estimate for each option
+
+Our agent keeps a number $Q$ for each machine — its current guess of
+"how good is this machine?" Both start at 0 (no idea).
+
+After every play, the agent updates its guess:
+
+$$
+Q_{\text{new}} = Q_{\text{old}} + \alpha \times (\text{reward} - Q_{\text{old}})
+$$
+
+The part $(\text{reward} - Q_{\text{old}})$ is the **prediction error**:
+*"how different was reality from what I expected?"*
+
+- Got a coin ($1$) when you expected little ($Q=0.2$)? Positive surprise → $Q$ goes **up**.
+- Got nothing ($0$) when you expected a lot ($Q=0.8$)? Negative surprise → $Q$ goes **down**.
+
+The **learning rate** $\alpha$ (alpha, between 0 and 1) controls how big
+each update is: how much the newest experience counts.
+
+```{r}
+alpha <- 0.3
+Q <- 0                      # current guess for one machine
+reward <- 1                 # we just won a coin!
+Q <- Q + alpha * (reward - Q)
+Q
+```
+
+Run the update in your head: if we keep winning, $Q$ climbs toward 1.
+
+::: {.callout-note}
+This little rule is famous. It is called the **Rescorla–Wagner rule**, and
+brain cells that release dopamine really do signal prediction errors —
+this model helped scientists discover that!
+:::
+
+## Idea 2: turn guesses into choices
+
+If Machine B looks better, should the agent *always* choose B?
+Then it would never notice if it was wrong about A.
+The agent should *mostly* choose what looks best, but sometimes explore.
+
+The standard tool is the **softmax** rule. Don't worry about the formula —
+what matters is the behaviour of its parameter $\beta$ (beta):
+
+```{r}
+softmax <- function(values, beta) {
+  scores <- exp(beta * (values - max(values)))
+  scores / sum(scores)
+}
+
+Q <- c(0.3, 0.5)      # machine B looks a bit better
+softmax(Q, beta = 0)   # beta = 0: ignore the values, choose 50:50
+softmax(Q, beta = 5)   # beta = 5: clearly prefer B, still try A sometimes
+softmax(Q, beta = 50)  # beta = 50: almost always B
+```
+
+Small $\beta$ = curious and random. Big $\beta$ = greedy and confident.
+
+## Building the full agent
+
+Now we connect the loop: **look → choose → get reward → learn**, repeated.
+
+```{r}
+simulate_learner <- function(n_trials = 100,
+                             alpha = 0.3,
+                             beta = 5,
+                             reward_probs = c(0.3, 0.7)) {
+  n_options <- length(reward_probs)
+  Q <- rep(0, n_options)
+  choice <- integer(n_trials)
+  reward <- integer(n_trials)
+
+  for (t in 1:n_trials) {
+    p <- softmax(Q, beta)                                   # how attractive is each option?
+    choice[t] <- sample.int(n_options, size = 1, prob = p)  # choose one
+    reward[t] <- rbinom(1, size = 1, prob = reward_probs[choice[t]])  # world responds
+    Q[choice[t]] <- Q[choice[t]] + alpha * (reward[t] - Q[choice[t]]) # learn
+  }
+
+  data.frame(trial = 1:n_trials, choice = choice, reward = reward)
+}
+```
+
+That's it. **A learning mind in 15 lines.** Let's watch it live its life:
+
+```{r}
+library(ggplot2)
+set.seed(1)
+
+one_life <- simulate_learner()
+ggplot(one_life, aes(x = trial, y = choice)) +
+  geom_point(aes(color = factor(reward)), size = 2) +
+  scale_y_continuous(breaks = c(1, 2), labels = c("A (30%)", "B (70%)")) +
+  scale_color_manual(values = c("grey70", "gold2"), name = "reward",
+                     labels = c("nothing", "coin!")) +
+  labs(title = "One agent's 100 turns", y = "machine chosen")
+```
+
+At the start it jumps around (exploring); later it settles on B (exploiting).
+
+## The learning curve
+
+One agent is noisy. Let's average **1000 agents** to see the typical pattern:
+
+```{r}
+many <- do.call(rbind, lapply(1:1000, function(i) simulate_learner()))
+curve <- aggregate(chose_best ~ trial,
+                   data = transform(many, chose_best = as.numeric(choice == 2)),
+                   FUN = mean)
+
+ggplot(curve, aes(trial, chose_best)) +
+  geom_line(linewidth = 1, color = "steelblue") +
+  geom_hline(yintercept = 0.5, linetype = "dashed") +
+  ylim(0, 1) +
+  labs(title = "Learning curve of 1000 agents",
+       y = "fraction choosing the better machine")
+```
+
+This shape — fast improvement, then a plateau — appears in real experiments
+with humans, monkeys, pigeons, bees, and fish. Our 15-line agent captures
+something real.
+
+::: {.callout-tip}
+## Try it! — become a parameter scientist
+
+Change one parameter at a time and re-run the learning-curve code.
+Before each run, **write down your prediction**!
+
+1. `alpha = 0.05` (very slow learner) — what happens to the curve?
+2. `alpha = 1` (only the last experience counts) — better or worse? Why?
+3. `beta = 0` — what does the curve look like now?
+4. Make the problem *hard*: `reward_probs = c(0.45, 0.55)`. How well do
+   agents do? How is this like real life?
+:::
+
+::: {.callout-important}
+## The big idea
+
+$\alpha$ and $\beta$ are called **parameters**. Different parameter values =
+different "personalities" of learner. When researchers fit these parameters
+to real people's choices, they can *measure* how individuals learn.
+That is **computational modelling of behaviour** — the field this camp
+is about, and the topic of active research at RIKEN.
+:::
+
+## What you learned
+
+- The bandit problem: explore vs exploit
+- Agents learn by **prediction error** (Rescorla–Wagner rule), scaled by learning rate $\alpha$
+- Softmax turns value estimates into choices; $\beta$ sets curiosity vs greed
+- Averaging many simulated agents reveals the *typical* behaviour of a model
+
+These functions are saved in [`R/bandit_functions.R`](../R/bandit_functions.R),
+so next time we can just load them with `source("R/bandit_functions.R")`.
+
+Next tutorial: our agent stops being alone. **What happens when agents
+can watch each other?**

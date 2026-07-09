@@ -17,14 +17,18 @@ their new discoveries!
 
 1. Follow [`setup/setup_guide.md`](setup/setup_guide.md) — install R and RStudio **before the camp**
 2. Open `ScienceHighSchool.Rproj` in RStudio (this makes all file paths work)
-3. Open `tutorials/01_welcome_to_r.qmd` and press **Render** — or just read along
-   and type the code into the console
+3. Open `tutorials/01_welcome_to_r_notebook.Rmd`
+4. Run each code block with the green **Run** button. Change the code in the
+   notebook and run it again to see what changes.
+
+The original `.qmd` and `.html` tutorials are still kept as static reading
+copies.
 
 ## What's where
 
 | Folder | Contents |
 |---|---|
-| [`tutorials/`](tutorials/) | Five hands-on tutorials (Quarto), the core of the course |
+| [`tutorials/`](tutorials/) | Five interactive R Notebooks, plus static Quarto/HTML copies |
 | [`slides/`](slides/) | Lecture slide decks + the students' final-presentation template |
 | [`R/`](R/) | Clean model code (`bandit_functions.R`), the playable slot-machine game, verification script |
 | [`project/`](project/) | Mini-project menu for the final presentation |
@@ -36,12 +40,18 @@ their new discoveries!
 
 | # | Tutorial | Key idea | Camp slot |
 |---|---|---|---|
-| 1 | Welcome to R | variables, vectors, randomness | pre-camp / Day 1 |
-| 2 | Building Toy Worlds | models, Monte Carlo, random walks | Day 2 AM |
-| 3 | An Agent That Learns | bandits, prediction error, explore–exploit | Day 2 PM |
-| 4 | Learning From Others | social learning strategies, conformity | Day 3 AM |
-| 5 | Wisdom & Madness of Crowds | collective intelligence, herding | Day 3 AM |
-| — | Mini project + presentation | doing science | Day 3 PM → Day 4 |
+| 1 | Welcome to R | variables, vectors, randomness | pre-camp only — Day 1 has no course time |
+| 2 | Building Toy Worlds | models, Monte Carlo, random walks | Day 2 morning |
+| 3 | An Agent That Learns | bandits, prediction error, explore–exploit | Day 2 afternoon |
+| 4 | Learning From Others | social learning strategies, conformity | Day 3 morning |
+| 5 | Wisdom & Madness of Crowds | collective intelligence, herding | Day 3 morning |
+| — | Mini project + presentation | doing science | Day 3 afternoon → Day 4 |
+
+Course blocks are fixed by the camp organisers: **09:00–17:20** on Days 2–3,
+**09:00–15:00** on Day 4 (presentations start 15:40). See
+[`instructor/teaching_notes.md`](instructor/teaching_notes.md) for the full
+official schedule, including the joint events (facility tour, researcher
+dinner) that bookend each day.
 
 The scientific through-line: **simple individual rules → rich collective
 outcomes**. The capstone model reproduces the main result of

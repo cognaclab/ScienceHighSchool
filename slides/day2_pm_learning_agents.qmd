@@ -114,7 +114,7 @@ The same curve appears in humans, monkeys, pigeons, bees...
 
 ## Your turn
 
-Open `tutorials/03_learning_agents.qmd` and build this agent yourself.
+Open `tutorials/03_learning_agents_notebook.Rmd` and build this agent yourself.
 
 Then experiment:
 

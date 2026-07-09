@@ -1,0 +1,215 @@
+---
+title: "Tutorial 4: Learning From Others (Interactive Notebook)"
+subtitle: "Social learning strategies and the power of conformity"
+output:
+  html_notebook:
+    toc: true
+    theme: cosmo
+editor_options:
+  chunk_output_type: inline
+---
+
+::: {.callout-note}
+## How to use this notebook
+
+Open `ScienceHighSchool.Rproj` first. Run each code block with the green **Run** button, or place your cursor in the code and press **Cmd/Ctrl + Enter**.
+
+Change one small thing at a time. Then run the block again and look at the result.
+:::
+
+```{r setup, include=FALSE}
+project_root <- normalizePath("..")
+if (!file.exists(file.path(project_root, "ScienceHighSchool.Rproj"))) {
+  project_root <- getwd()
+}
+if (!file.exists(file.path(project_root, "ScienceHighSchool.Rproj"))) {
+  stop("Please open ScienceHighSchool.Rproj before running this notebook.")
+}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+knitr::opts_knit$set(root.dir = project_root)
+```
+
+
+::: {.callout-note}
+## Word list（単語リスト）
+
+| English | 日本語 | Meaning |
+|---|---|---|
+| social learning | 社会学習 | learning by observing others |
+| individual learning | 個人学習 | learning from your own experience |
+| conformity | 同調 | following the majority more than proportionally |
+| strategy | 戦略 | a rule for deciding what to do |
+| majority | 多数派 | the option most people chose |
+:::
+
+## Why copy others?
+
+You arrive in a new town, hungry. Two ramen shops: one has a queue,
+one is empty. Where do you go?
+
+Most people join the queue — and that is often *smart*. Other people's
+choices contain **information**: they may know something you don't.
+Humans are the champions of **social learning**; it is the foundation
+of culture, science, and TikTok trends alike.
+
+But copying has a dark side, which we will discover in Tutorial 5.
+First, let's give our agents the ability to watch each other.
+
+## Setup
+
+Load the functions we built last time (they live in `R/bandit_functions.R`):
+
+```{r}
+source("R/bandit_functions.R")
+library(ggplot2)
+set.seed(2026)
+```
+
+## How should you use the majority?
+
+Suppose 10 agents played last round: **7 chose B, 3 chose A**.
+You get to peek before choosing. How strongly should the majority pull you?
+
+One flexible rule: choose option $k$ with probability proportional to
+(number of people choosing $k$) raised to a power $\theta$ (theta):
+
+$$
+p(\text{copy option } k) \propto (\text{count}_k)^{\,\theta}
+$$
+
+```{r}
+social_weights   # look at the code (it's tiny)
+```
+
+The exponent $\theta$ is the personality of the copier:
+
+```{r}
+counts <- c(3, 7)   # A was chosen 3 times, B was chosen 7 times
+social_weights(counts, theta = 0)   # ignore popularity completely
+social_weights(counts, theta = 1)   # copy in proportion: 30% / 70%
+social_weights(counts, theta = 3)   # CONFORMITY: majority is exaggerated!
+```
+
+With $\theta = 3$, a 70% majority attracts about 92% of copiers.
+Following the majority *more than proportionally* is called
+**conformist transmission**, and experiments show humans (and even fish
+and bees) often do exactly this.
+
+```{r, fig.height=3.5}
+grid <- expand.grid(share = seq(0.05, 0.95, by = 0.05),
+                    theta = c(0.5, 1, 3))
+grid$p_copy <- mapply(function(s, th) social_weights(c(10 * s, 10 * (1 - s)), th)[1],
+                      grid$share, grid$theta)
+ggplot(grid, aes(share, p_copy, color = factor(theta))) +
+  geom_line(linewidth = 1) +
+  geom_abline(slope = 1, intercept = 0, linetype = "dotted") +
+  labs(title = "How theta changes copying",
+       x = "share of group choosing option A",
+       y = "probability of copying A",
+       color = expression(theta)) +
+  coord_equal()
+```
+
+The dotted line is proportional copying. Above it (steep S-shape, $\theta=3$):
+conformity. Below it ($\theta=0.5$): the majority is *weakened*.
+
+## A society of learners
+
+Now the main event. We put **many agents in the same world**. Each agent
+mixes two sources of information:
+
+- its **own experience** (the Q values from Tutorial 3), and
+- **what the group did** on the previous round (the social weights above).
+
+One number, $\sigma$ (sigma, from 0 to 1), sets the mix:
+
+$$
+p(\text{choice}) = (1 - \sigma) \times p_{\text{individual}} \;+\; \sigma \times p_{\text{social}}
+$$
+
+- $\sigma = 0$: pure individual learner — ignores everybody
+- $\sigma = 1$: pure copier — never uses its own experience
+- in between: a bit of both (like most of us!)
+
+The function `simulate_group()` in `R/bandit_functions.R` implements this.
+Open the file and read it — you already know every ingredient!
+
+```{r}
+sim <- simulate_group(n_agents = 10, n_trials = 100,
+                      sigma = 0.3, theta = 2)
+head(sim)
+```
+
+Each row = one agent on one trial. Let's watch the whole group at once:
+
+```{r}
+ggplot(sim, aes(x = trial, y = agent, fill = factor(choice))) +
+  geom_tile() +
+  scale_fill_manual(values = c("1" = "grey80", "2" = "seagreen"),
+                    name = "choice", labels = c("A (30%)", "B (70%)")) +
+  scale_y_continuous(breaks = 1:10) +
+  labs(title = "10 agents learning together (green = better option)")
+```
+
+Green spreads through the group like a rumour. That is culture, in miniature.
+
+## Does copying help?
+
+Let's compare societies with different amounts of social learning.
+`average_performance()` runs the simulation many times and reports,
+for each trial, the fraction of agents choosing the better option:
+
+```{r, cache=TRUE}
+mix <- do.call(rbind, lapply(c(0, 0.3, 0.6), function(s) {
+  perf <- average_performance(n_reps = 30, n_agents = 10, n_trials = 100,
+                              sigma = s, theta = 2)
+  transform(perf, sigma = s)
+}))
+
+ggplot(mix, aes(trial, correct, color = factor(sigma))) +
+  geom_line(linewidth = 1) +
+  ylim(0, 1) +
+  labs(title = "Is a copying society a smarter society?",
+       y = "fraction choosing the better option",
+       color = expression(sigma))
+```
+
+Look carefully: societies with moderate copying ($\sigma = 0.3$–$0.6$)
+typically end up **better than pure individual learners**. Copying spreads
+good discoveries quickly, and the majority filters out individual mistakes.
+Group intelligence for free!
+
+...or is it? (Cliffhanger for Tutorial 5.)
+
+::: {.callout-tip}
+## Try it! — explore the society
+
+1. **Big city vs small village**: run the comparison with
+   `n_agents = 3` and `n_agents = 30`. Does group size change how much
+   copying helps?
+2. **The contrarian society**: set `theta = 0.5` (avoid the majority).
+   How does it perform?
+3. **The pure-copier trap**: try `sigma = 0.95`. Watch the tile plot from
+   earlier — what goes wrong? Can a group learn if almost nobody collects
+   their own information?
+:::
+
+::: {.callout-important}
+## The big idea
+
+$\sigma$ (how much to copy) and $\theta$ (how strongly to follow majorities)
+are **social learning strategies**. Evolution, development, and culture all
+tune these knobs. A central question in current research — including at
+RIKEN and in the COSMOS summer school — is: *which strategies are smart,
+and when?* Tomorrow you will answer part of that question yourselves.
+:::
+
+## What you learned
+
+- Other people's behaviour is information; copying is often rational
+- $\theta$: proportional imitation vs **conformity** (exaggerating majorities)
+- $\sigma$: the balance between own experience and social information
+- Moderate copying can make the whole group smarter
+
+Next tutorial: when crowds are wise, when they go mad — and how to tell
+the difference.

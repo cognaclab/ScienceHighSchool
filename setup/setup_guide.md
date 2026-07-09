@@ -4,8 +4,9 @@
 
 You need a laptop with two free programs: **R** (the engine) and
 **RStudio** (the friendly cockpit). Installation takes about 15 minutes.
-If anything fails, don't worry — email us, or we will fix it together on Day 1
-evening.
+If anything fails, don't worry — email us before the camp if you can. Day 1
+has no class time at all, so if something is still broken when you arrive,
+we'll fix it together first thing on Day 2 morning.
 
 ## Step 1: Install R（Rのインストール）
 
@@ -29,7 +30,7 @@ evening.
    (it can take several minutes — lots of downloading is normal):
 
 ```r
-install.packages("tidyverse")
+install.packages(c("ggplot2", "rmarkdown", "knitr"))
 ```
 
 4. If it asks a question, answering **Yes**/**OK** is fine.

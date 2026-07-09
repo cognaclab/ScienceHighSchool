@@ -2,16 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.38">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>teaching_notes</title>
 <style>
-/* Default styles provided by pandoc.
-** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -64,14 +61,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="teaching_notes_files/libs/clipboard/clipboard.min.js"></script>
 <script src="teaching_notes_files/libs/quarto-html/quarto.js" type="module"></script>
 <script src="teaching_notes_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="teaching_notes_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="teaching_notes_files/libs/quarto-html/popper.min.js"></script>
 <script src="teaching_notes_files/libs/quarto-html/tippy.umd.min.js"></script>
 <script src="teaching_notes_files/libs/quarto-html/anchor.min.js"></script>
 <link href="teaching_notes_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="teaching_notes_files/libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="teaching_notes_files/libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="teaching_notes_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="teaching_notes_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="teaching_notes_files/libs/bootstrap/bootstrap-138a6193a3bd40baf1e627da441a4734.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="teaching_notes_files/libs/bootstrap/bootstrap-d6a003b94517c951b2d65075d42fb01b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
 
 </head>
@@ -140,12 +138,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td>10:00</td>
 <td>Hands-on: R basics</td>
-<td><code>tutorials/01_welcome_to_r.qmd</code></td>
+<td><code>tutorials/01_welcome_to_r_notebook.Rmd</code></td>
 </tr>
 <tr class="odd">
 <td>11:00</td>
 <td>Hands-on: toy worlds, Monte Carlo, random walks</td>
-<td><code>tutorials/02_simulating_randomness.qmd</code></td>
+<td><code>tutorials/02_simulating_randomness_notebook.Rmd</code></td>
 </tr>
 <tr class="even">
 <td>13:30</td>
@@ -155,7 +153,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td>14:15</td>
 <td>Hands-on: build the learning agent</td>
-<td><code>tutorials/03_learning_agents.qmd</code></td>
+<td><code>tutorials/03_learning_agents_notebook.Rmd</code></td>
 </tr>
 <tr class="even">
 <td>16:00</td>
@@ -194,7 +192,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td>10:00</td>
 <td>Hands-on: social learning + collective behaviour</td>
-<td><code>tutorials/04_social_learning.qmd</code>, <code>05_collective_behaviour.qmd</code></td>
+<td><code>tutorials/04_social_learning_notebook.Rmd</code>, <code>05_collective_behaviour_notebook.Rmd</code></td>
 </tr>
 <tr class="odd">
 <td>11:30</td>
@@ -243,7 +241,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Smart quotes</strong>: if students type code into LINE/Word first, <code>"</code> becomes <code>"</code> and breaks. Keep them in RStudio.</li>
 <li><strong>Japanese input mode</strong>: a full-width space（　）inside code is invisible and fatal. If an error makes no sense, retype the line in half-width.</li>
 <li><strong>The game saves data</strong> into <code>data/game_records/</code> — players must use different names or files overwrite.</li>
-<li>Render button asks to install packages (rmarkdown/knitr): allow it, or have students read tutorials in the browser from pre-rendered HTML you bring on a USB stick.</li>
+<li>Notebook asks to install packages (rmarkdown/knitr): allow it, or have students read tutorials in the browser from pre-rendered HTML you bring on a USB stick.</li>
 </ul>
 </section>
 <section id="exporting-figures-for-the-hotel-evening" class="level2">

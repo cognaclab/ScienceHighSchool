@@ -130,5 +130,5 @@ little pieces of randomness like this.
 4. **Ask anything** — asking is what researchers do all day
 
 ::: {.fragment}
-**Let's start!** → open `tutorials/01_welcome_to_r.qmd`
+**Let's start!** → open `tutorials/01_welcome_to_r_notebook.Rmd`
 :::

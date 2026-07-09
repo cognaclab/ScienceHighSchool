@@ -2,16 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.38">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>setup_guide</title>
 <style>
-/* Default styles provided by pandoc.
-** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -64,14 +61,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="setup_guide_files/libs/clipboard/clipboard.min.js"></script>
 <script src="setup_guide_files/libs/quarto-html/quarto.js" type="module"></script>
 <script src="setup_guide_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="setup_guide_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="setup_guide_files/libs/quarto-html/popper.min.js"></script>
 <script src="setup_guide_files/libs/quarto-html/tippy.umd.min.js"></script>
 <script src="setup_guide_files/libs/quarto-html/anchor.min.js"></script>
 <link href="setup_guide_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="setup_guide_files/libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="setup_guide_files/libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="setup_guide_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="setup_guide_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="setup_guide_files/libs/bootstrap/bootstrap-138a6193a3bd40baf1e627da441a4734.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="setup_guide_files/libs/bootstrap/bootstrap-d6a003b94517c951b2d65075d42fb01b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
 
 </head>
@@ -114,7 +112,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Find the <strong>Console</strong> (the panel with the <code>&gt;</code> symbol)</li>
 <li>Copy this line into the Console, press <strong>Enter</strong>, and wait (it can take several minutes — lots of downloading is normal):</li>
 </ol>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tidyverse"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"ggplot2"</span>, <span class="st">"rmarkdown"</span>, <span class="st">"knitr"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ol start="4" type="1">
 <li>If it asks a question, answering <strong>Yes</strong>/<strong>OK</strong> is fine.</li>
 </ol>

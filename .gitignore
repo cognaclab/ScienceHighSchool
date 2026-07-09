@@ -9,6 +9,7 @@ data/game_records/
 .Rhistory
 .RData
 .Rdata
+Rplots.pdf
 
 # Quarto / rendered output
 .quarto/
@@ -16,6 +17,7 @@ data/game_records/
 *_files/
 tutorials/*.html
 slides/*.html
+tutorials/*_notebook_cache/
 
 # OS
 .DS_Store
