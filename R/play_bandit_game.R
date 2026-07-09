@@ -6,8 +6,8 @@
 #   1. Open this project in RStudio
 #   2. In the console, run:
 #        source("R/play_bandit_game.R")
-#        play_game("Yuki")                    # solo version
-#        play_game("Yuki", hints = TRUE)      # with social hints
+#        play_game("Wataru")                    # solo version
+#        play_game("Wataru", hints = TRUE)      # with social hints
 #   3. Your results are saved in data/game_records/
 #      so the whole group can analyse them later!
 #

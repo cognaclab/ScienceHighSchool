@@ -29,7 +29,7 @@ What do you do?
 - New study method, or the usual one?
 
 ::: {.fragment}
-**Explore**（探索）or **exploit**（活用）?
+**Explore**（探索）or **exploit**（収穫/知識の活用）?
 
 This is the *multi-armed bandit problem* —
 studied in psychology, neuroscience, economics, and AI.

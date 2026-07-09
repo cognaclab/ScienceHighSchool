@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>teaching_notes</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="teaching_notes_files/libs/clipboard/clipboard.min.js"></script>
+<script src="teaching_notes_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="teaching_notes_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="teaching_notes_files/libs/quarto-html/popper.min.js"></script>
+<script src="teaching_notes_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="teaching_notes_files/libs/quarto-html/anchor.min.js"></script>
+<link href="teaching_notes_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="teaching_notes_files/libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="teaching_notes_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="teaching_notes_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="teaching_notes_files/libs/bootstrap/bootstrap-138a6193a3bd40baf1e627da441a4734.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+
+
+
+<section id="teaching-notes-instructors-only" class="level1">
+<h1>Teaching Notes (instructors only)</h1>
+<p>Practical notes for running the course at the RIKEN Wako Science Camp, July 27–30, 2026. Camp logistics (hotel transfers, overnight supervision) are handled by the Wako administration team (contact: Kawano-san).</p>
+<section id="the-constraints-that-shape-this-course" class="level2">
+<h2 class="anchored" data-anchor-id="the-constraints-that-shape-this-course">The constraints that shape this course</h2>
+<ul>
+<li>4 students, first-year high school (~15–16 y.o.), likely little/no programming experience, motivated enough to apply for an English course</li>
+<li><strong>Day 1 (Mon 7/27)</strong> is orientation, run by RIKEN staff — our course effectively starts Day 2</li>
+<li><strong>Day 2 (Tue 7/28):</strong> Wataru on site; full teaching day</li>
+<li><strong>Day 3 (Wed 7/29):</strong> Wataru travelling (remote if possible); lab members lead. Evening at the hotel = students build presentation slides</li>
+<li><strong>Day 4 (Thu 7/30):</strong> AM presentation practice; PM final presentation in front of the RIKEN president and directors — 10 min talk + 5 min Q&amp;A</li>
+<li>Expectation from the organisers: <strong>not</strong> big scientific results. Friendship, fun, good memories, “I want to come back to RIKEN as a researcher.” The presentation traditionally includes camp-life photos.</li>
+</ul>
+</section>
+<section id="suggested-timetable" class="level2">
+<h2 class="anchored" data-anchor-id="suggested-timetable">Suggested timetable</h2>
+<section id="before-the-camp" class="level3">
+<h3 class="anchored" data-anchor-id="before-the-camp">Before the camp</h3>
+<ul>
+<li>Email students <code>setup/setup_guide.md</code>; ask for the “blue histogram screenshot” as homework — this surfaces installation problems early</li>
+<li>Backup for broken laptops/blocked installs: create free <a href="https://posit.cloud">Posit Cloud</a> workspaces with this repo pre-loaded</li>
+<li>Optional (Kawano-san’s idea, works well): ask students to run a small <strong>guessing game at school</strong> before the camp (e.g.&nbsp;“how many candies in this jar?” — collect ~30 guesses on paper). This becomes <em>their own</em> wisdom-of-crowds dataset for Tutorial 5 / the presentation</li>
+</ul>
+</section>
+<section id="day-1-evening-if-there-is-any-slot-at-all" class="level3">
+<h3 class="anchored" data-anchor-id="day-1-evening-if-there-is-any-slot-at-all">Day 1 evening (if there is any slot at all)</h3>
+<ul>
+<li>Meet the students, fix broken installs, <code>setup/test_setup.R</code> on every laptop</li>
+<li>Nothing else — they will be tired</li>
+</ul>
+</section>
+<section id="day-2-the-big-teaching-day" class="level3">
+<h3 class="anchored" data-anchor-id="day-2-the-big-teaching-day">Day 2 (the big teaching day)</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Time</th>
+<th>What</th>
+<th>Materials</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>09:00</td>
+<td>Lecture: Simulating Societies (~40 min + questions)</td>
+<td><code>slides/day2_am_models_and_agents.qmd</code></td>
+</tr>
+<tr class="even">
+<td>10:00</td>
+<td>Hands-on: R basics</td>
+<td><code>tutorials/01_welcome_to_r.qmd</code></td>
+</tr>
+<tr class="odd">
+<td>11:00</td>
+<td>Hands-on: toy worlds, Monte Carlo, random walks</td>
+<td><code>tutorials/02_simulating_randomness.qmd</code></td>
+</tr>
+<tr class="even">
+<td>13:30</td>
+<td>Lecture: An Agent That Learns (~30 min)</td>
+<td><code>slides/day2_pm_learning_agents.qmd</code></td>
+</tr>
+<tr class="odd">
+<td>14:15</td>
+<td>Hands-on: build the learning agent</td>
+<td><code>tutorials/03_learning_agents.qmd</code></td>
+</tr>
+<tr class="even">
+<td>16:00</td>
+<td><strong>Play the slot-machine game</strong> (solo mode) — energiser!</td>
+<td><code>R/play_bandit_game.R</code></td>
+</tr>
+<tr class="odd">
+<td>16:30</td>
+<td>Preview of tomorrow + Q&amp;A</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="day-3" class="level3">
+<h3 class="anchored" data-anchor-id="day-3">Day 3</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Time</th>
+<th>What</th>
+<th>Materials</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>09:00</td>
+<td>Lecture: Wisdom &amp; Madness of Crowds (~40 min)</td>
+<td><code>slides/day3_wisdom_and_madness.qmd</code></td>
+</tr>
+<tr class="even">
+<td>10:00</td>
+<td>Hands-on: social learning + collective behaviour</td>
+<td><code>tutorials/04_social_learning.qmd</code>, <code>05_collective_behaviour.qmd</code></td>
+</tr>
+<tr class="odd">
+<td>11:30</td>
+<td>Play the game again (social-hints mode); look at the group’s data</td>
+<td><code>R/play_bandit_game.R</code></td>
+</tr>
+<tr class="even">
+<td>13:30</td>
+<td><strong>Mini projects</strong>: choose, predict, simulate</td>
+<td><code>project/mini_project_menu.md</code></td>
+</tr>
+<tr class="odd">
+<td>16:00</td>
+<td>Freeze results: <strong>export every figure to <code>figs/</code> as PNG</strong> (see below)</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>evening (hotel)</td>
+<td>Slide building — no R needed if figures are exported</td>
+<td>template or PowerPoint</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="day-4" class="level3">
+<h3 class="anchored" data-anchor-id="day-4">Day 4</h3>
+<ul>
+<li>AM: two full rehearsals; time them strictly (10 min); prepare 2–3 likely Q&amp;A questions per student <em>in English and Japanese</em></li>
+<li>PM: presentation. Breathe.</li>
+</ul>
+</section>
+</section>
+<section id="pacing-advice" class="level2">
+<h2 class="anchored" data-anchor-id="pacing-advice">Pacing advice</h2>
+<ul>
+<li><strong>Tutorials 1–2 are the risk zone.</strong> If students have zero experience, budget the whole morning. Tutorials 4–5 can be compressed (run the code together on the projector) — the <em>ideas</em> matter more than typing speed.</li>
+<li>Every tutorial has “Try it!” boxes — these are buffers. Skip or assign selectively to faster/slower students.</li>
+<li>The single most important outcome of Day 2 AM: every student has personally made a plot appear. Celebrate it.</li>
+<li>Non-negotiable core if time collapses: Tutorial 3 (learning agent) + the σ-sweep figure in Tutorial 5. That is the whole story.</li>
+</ul>
+</section>
+<section id="common-pitfalls" class="level2">
+<h2 class="anchored" data-anchor-id="common-pitfalls">Common pitfalls</h2>
+<ul>
+<li><strong>Working directory errors</strong> (<code>cannot open file 'R/bandit_functions.R'</code>): they didn’t open the <code>.Rproj</code>. Fix: File → Open Project.</li>
+<li><strong>Smart quotes</strong>: if students type code into LINE/Word first, <code>"</code> becomes <code>"</code> and breaks. Keep them in RStudio.</li>
+<li><strong>Japanese input mode</strong>: a full-width space（　）inside code is invisible and fatal. If an error makes no sense, retype the line in half-width.</li>
+<li><strong>The game saves data</strong> into <code>data/game_records/</code> — players must use different names or files overwrite.</li>
+<li>Render button asks to install packages (rmarkdown/knitr): allow it, or have students read tutorials in the browser from pre-rendered HTML you bring on a USB stick.</li>
+</ul>
+</section>
+<section id="exporting-figures-for-the-hotel-evening" class="level2">
+<h2 class="anchored" data-anchor-id="exporting-figures-for-the-hotel-evening">Exporting figures for the hotel evening</h2>
+<p>Before students leave the lab on Day 3, make sure their key figures exist as files (the hotel has no guaranteed dev environment):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"figs/my_result.png"</span>, <span class="at">width =</span> <span class="dv">8</span>, <span class="at">height =</span> <span class="dv">5</span>, <span class="at">dpi =</span> <span class="dv">200</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>PowerPoint/Google Slides + PNG figures is a perfectly fine fallback for the final talk — the Quarto template (<code>slides/final_presentation_template.qmd</code>) is offered, not required.</p>
+</section>
+<section id="english-support" class="level2">
+<h2 class="anchored" data-anchor-id="english-support">English support</h2>
+<ul>
+<li>Slides and tutorials carry Japanese glosses for technical terms; speak slowly, write keywords on the whiteboard</li>
+<li>Let students discuss in Japanese in pairs, then report in English — quality of thought first, language second</li>
+<li>For the Q&amp;A: rehearse “Could you say that again more slowly, please?” — it always gets a smile from the executives</li>
+</ul>
+</section>
+<section id="going-deeper-origins-of-these-materials" class="level2">
+<h2 class="anchored" data-anchor-id="going-deeper-origins-of-these-materials">Going deeper / origins of these materials</h2>
+<ul>
+<li><a href="https://cosmossummerschool.github.io/">COSMOS Summer School</a> — the university-level version of this course (Toyokawa &amp; Wu); point keen students there</li>
+<li>Toyokawa, Whalen &amp; Laland (2019). <em>Social learning strategies regulate the wisdom and madness of interactive crowds.</em> Nature Human Behaviour — the study Tutorial 5 reproduces in miniature</li>
+<li>Rescorla &amp; Wagner (1972); Sutton &amp; Barto, <em>Reinforcement Learning</em> — for instructors who want the deep background</li>
+</ul>
+</section>
+<section id="repo-hygiene" class="level2">
+<h2 class="anchored" data-anchor-id="repo-hygiene">Repo hygiene</h2>
+<ul>
+<li><code>notes/</code> is <strong>git-ignored</strong> (contains internal email correspondence) — keep it that way if the repo is ever published</li>
+<li><code>data/game_records/</code> will contain student names — anonymise or delete before any public release</li>
+<li>Run <code>Rscript R/verify_simulations.R</code> after any change to the model code</li>
+</ul>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
