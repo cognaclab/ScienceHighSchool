@@ -95,7 +95,7 @@ A **vector** holds several values together. We make one with `c()`
 ("c" for *combine*):
 
 ```{r}
-temperatures <- c(31.5, 33.0, 29.8, 34.2)   # this week in Wako, maybe?
+temperatures <- c(35.5, 37.0, 39.8, 36.2)   # this week in Wako, maybe?
 temperatures
 ```
 
