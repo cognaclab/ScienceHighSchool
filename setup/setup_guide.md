@@ -47,7 +47,6 @@ ggplot(data.frame(x = rnorm(500)), aes(x)) +
 ```
 
 If a blue histogram appears in the **Plots** panel: **you are ready!** 🎉
-Take a screenshot and email it to us — that counts as your "homework".
 
 You can also run our full test script: open `setup/test_setup.R` in RStudio
 and click **Source** (top-right of the editor panel).

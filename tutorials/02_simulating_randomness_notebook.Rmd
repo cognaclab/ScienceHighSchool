@@ -1,7 +1,10 @@
 ---
-title: "Tutorial 2: Building Toy Worlds (Interactive Notebook)"
-subtitle: "What a simulation is, and why scientists trust dice"
+title: 'Tutorial 2: Building Toy Worlds (Interactive Notebook)'
+subtitle: What a simulation is, and why scientists trust dice
 output:
+  html_document:
+    toc: true
+    df_print: paged
   html_notebook:
     toc: true
     theme: cosmo
