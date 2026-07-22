@@ -1,7 +1,10 @@
 ---
-title: "Tutorial 3: An Agent That Learns (Interactive Notebook)"
-subtitle: "Slot machines, trial and error, and the explore–exploit dilemma"
+title: 'Tutorial 3: An Agent That Learns (Interactive Notebook)'
+subtitle: Slot machines, trial and error, and the explore–exploit dilemma
 output:
+  html_document:
+    toc: true
+    df_print: paged
   html_notebook:
     toc: true
     theme: cosmo

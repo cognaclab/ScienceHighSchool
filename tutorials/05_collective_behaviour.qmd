@@ -154,7 +154,7 @@ $\beta = 5$, and $\theta = 4$ constant. The best strategy depends on both
 the environment and when we measure success.
 
 ::: {.callout-note}
-Researchers at RIKEN and elsewhere have tested exactly this with real
+Researchers at the University of St Andrews have tested exactly this with real
 people playing bandit games in groups online — and found the same pattern:
 conformist copying produces both collective wisdom and, in changing
 environments, herding. See Toyokawa, Whalen & Laland (2019),
@@ -165,7 +165,7 @@ environments, herding. See Toyokawa, Whalen & Laland (2019),
 ## Try it! — questions worth investigating
 
 Each of these could become part of your **final presentation**:
-Choose one, then write your prediction before changing the code.
+Choose one (or more!), then write your prediction before changing the code.
 
 1. **Best strategy in a restless world**: make the world flip every 50
    trials (`change_point` currently supports one flip — can you modify
@@ -183,7 +183,7 @@ Choose one, then write your prediction before changing the code.
 
 ## Part 4: From models to real behaviour — you are the data
 
-Models are only half of science. The other half: **data from real people**.
+Models are only half of human science. The other half: **data from real people**.
 Conveniently, four real people are attending this camp.
 
 The game has three machines and 40 turns. Each machine has a hidden chance
@@ -216,8 +216,8 @@ play_game("YourName", hints = TRUE)
 
 A hint comes from **saved human games**, not simulated agents. On turn 12,
 for example, the program looks at turn 12 in all CSV files already stored in
-`data/game_records/`. It shows the machine chosen most often. It does not show
-other players' rewards or the true reward probabilities.
+`data/game_records/`. It shows how many games chose each machine. It does not
+show other players' rewards or the true reward probabilities.
 
 The hint pool is loaded when your game starts. By default, it includes every
 saved solo and social game. This means that play order matters. It also means
@@ -227,8 +227,8 @@ that test records should be removed before the real social games begin.
 
 Each game creates one CSV file in `data/game_records/`, such as
 `YourName_solo.csv` or `YourName_social.csv`. Each row stores the player,
-mode, trial, choice, reward, and hint shown. Replaying with the same nickname
-and mode replaces the old file.
+mode, trial, choice, reward, and social counts (`hint_1`, `hint_2`, and
+`hint_3`). Replaying with the same nickname and mode replaces the old file.
 
 These files may contain names. Keep them local. Do not upload or commit them.
 
@@ -255,14 +255,19 @@ After everyone finishes, compare your learning curve with the model's:
 ```{r}
 #| eval: false
 files <- list.files("data/game_records", pattern = "\\.csv$", full.names = TRUE)
-human <- do.call(rbind, lapply(files, read.csv))
+keep <- c("player", "mode", "trial", "choice", "reward")
+human <- do.call(rbind, lapply(files, function(f) read.csv(f)[keep]))
 
 # machine 2 pays best (0.65) - how often did humans find it?
-human_curve <- aggregate(found_best ~ trial,
+human_curve <- aggregate(found_best ~ trial + mode,
                          data = transform(human, found_best = as.numeric(choice == 2)),
                          FUN = mean)
-plot(human_curve, type = "l", ylim = c(0, 1),
-     main = "Did WE find the best machine?")
+ggplot(human_curve, aes(trial, found_best, color = mode)) +
+  geom_hline(yintercept = 1 / 3, linetype = "dotted") +
+  geom_line(linewidth = 1) + ylim(0, 1) +
+  scale_color_manual(values = c(solo = "steelblue", social = "darkorange")) +
+  labs(title = "Did WE find the best machine?", y = "fraction choosing machine 2",
+       color = "session")
 ```
 
 Questions you can now investigate like a real cognitive scientist:
@@ -279,5 +284,42 @@ Questions you can now investigate like a real cognitive scientist:
 - The same strategy can be smart or disastrous depending on the environment
 - Models become science when compared with real behaviour — including yours
 
-**Now: pick a question, run simulations, make figures, and build your
+## Optional final activity: play together in real time
+
+The console game above uses choices saved from earlier games. The COSMOS
+multiplayer task lets everyone play **at the same time** (real-time,
+リアルタイム). It is a 16-choice fishing game: click or tap one square of a
+4 × 4 ocean grid on each turn and try to catch as many fish as possible.
+
+1. Ask the instructor to choose a condition, then open the same link together:
+   - [Individual condition — play without social information](http://tk2-127-63496.vs.sakura.ne.jp:8989/)
+   - [Social condition — play with the group](http://tk2-127-63496.vs.sakura.ne.jp:8989/?condition=group)
+2. In the social condition, open the link at roughly the same time as the other
+   players. Everyone who enters within the 30-second waiting window joins the
+   same session.
+3. In the social condition, you can see other players' **choices**, but not
+   their rewards. Start together and notice whether the group spreads out or
+   forms a herd.
+4. At the end, download the session results. The social-condition download also
+   contains social information.
+
+For screenshots and the original activity notes, see the
+[COSMOS instructions](https://cosmossummerschool.github.io/notebooks/tutorial-1-n-armed-task.html).
+The game needs an internet connection and uses an `http` link, so do not enter
+personal information.
+
+Keep downloaded results local. A safe place in this project is a new
+`data/game_records/realtime/` folder; Git ignores everything inside
+`data/game_records/`. Do not mix these files with the local console-game CSVs
+one folder above, because their columns may be different.
+
+Possible presentation questions:
+
+- Did the group discover the best fishing spot faster in the social condition?
+- Did players converge on one spot? Was it actually a good spot?
+- How did one player's choices change after seeing the group?
+- What extra columns in the social download could measure conformity
+  (多数派同調傾向)?
+
+**Now: pick any questions, modify or write code, run simulations, make figures, and build your
 presentation.** See [`project/mini_project_menu.md`](../project/mini_project_menu.md).

@@ -15,8 +15,8 @@
 # with some hidden probability. You have 40 turns. Find the good
 # machine and earn as many coins as you can!
 #
-# With hints = TRUE you also see which machine SAVED EARLIER GAMES
-# chose most often on the same turn - real human social information.
+# With hints = TRUE you see how many SAVED EARLIER GAMES chose
+# each machine on the same turn - real human social information.
 # Do the hints help? That is a research question you can test!
 # ============================================================
 
@@ -56,7 +56,7 @@ delete_game_record <- function(player_name, hints = FALSE) {
 .earlier_choices <- function() {
   files <- list.files(.records_dir, pattern = "\\.csv$", full.names = TRUE)
   if (length(files) == 0) return(NULL)
-  do.call(rbind, lapply(files, read.csv))
+  do.call(rbind, lapply(files, function(f) read.csv(f)[c("trial", "choice")]))
 }
 
 .ask_choice <- function(t, input_fun) {
@@ -84,6 +84,7 @@ play_game <- function(player_name,
   choice <- integer(n_trials)
   reward <- integer(n_trials)
   hint_shown <- integer(n_trials)
+  hint_counts <- matrix(NA_integer_, nrow = n_trials, ncol = 3)
   score <- 0
 
   for (t in 1:n_trials) {
@@ -92,9 +93,13 @@ play_game <- function(player_name,
       turn_data <- earlier$choice[earlier$trial == t]
       if (length(turn_data) > 0) {
         counts <- tabulate(turn_data, nbins = 3)
+        hint_counts[t, ] <- counts
         hint_shown[t] <- which.max(counts)
-        cat(sprintf("  HINT: saved earlier games most often chose machine %d here\n",
-                    hint_shown[t]))
+        cat("  HINT: saved earlier games chose:\n")
+        for (machine in 1:3) {
+          people <- if (counts[machine] == 1) "person" else "people"
+          cat(sprintf("    Machine %d: %d %s\n", machine, counts[machine], people))
+        }
       }
     }
     choice[t] <- .ask_choice(t, input_fun)
@@ -112,7 +117,10 @@ play_game <- function(player_name,
     trial = 1:n_trials,
     choice = choice,
     reward = reward,
-    hint = hint_shown
+    hint = hint_shown,
+    hint_1 = hint_counts[, 1],
+    hint_2 = hint_counts[, 2],
+    hint_3 = hint_counts[, 3]
   )
   if (!dir.exists(.records_dir)) dir.create(.records_dir, recursive = TRUE)
   outfile <- .record_path(player_name, hints)
