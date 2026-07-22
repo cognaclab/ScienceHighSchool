@@ -2,9 +2,6 @@
 title: 'Tutorial 2: Building Toy Worlds (Interactive Notebook)'
 subtitle: What a simulation is, and why scientists trust dice
 output:
-  html_document:
-    toc: true
-    df_print: paged
   html_notebook:
     toc: true
     theme: cosmo
@@ -97,6 +94,7 @@ mean(n_heads >= 9)
 
 This computes the fraction of experiments with 9 or 10 heads.
 If a friend flips 10 coins and gets 9 heads, should you suspect a trick coin?
+Write down your guess before you run the code.
 
 *(This — estimating a probability by simulating many times — is called the
 **Monte Carlo method**. Real researchers use it constantly.)*
@@ -104,7 +102,11 @@ If a friend flips 10 coins and gets 9 heads, should you suspect a trick coin?
 
 ## Experiment 2: More flips, more truth
 
+`set.seed(1)` makes the random numbers repeat exactly. This means your table
+will look like ours when you run the code.
+
 ```{r}
+set.seed(1)
 flip_average <- function(n_flips) {
   mean(sample(c(1, 0), size = n_flips, replace = TRUE))
 }
@@ -138,7 +140,7 @@ From now on we will build all our models as functions.
 ## Experiment 3: The random walk
 
 Imagine a person standing on a line. Every second they flip a coin:
-heads → one step left (+1), tails → one step right (-1).
+heads → one step right (+1), tails → one step left (−1).
 Where are they after 100 steps?
 
 ```{r}
@@ -150,18 +152,28 @@ ggplot(data.frame(time = 0:100, position), aes(time, position)) +
 ```
 
 Run it again — a completely different path every time!
-Now let's watch **20 walkers at once**:
+To make many walkers, we need a **for loop**（ループ・繰り返し）. A for
+loop repeats the code inside `{ }`. The value of `i` changes each time.
+
+```{r}
+for (i in 1:5) {
+  print(i)
+}
+```
+
+Now let's use a for loop to watch **20 walkers at once**:
 
 ```{r}
 random_walk <- function(n_steps = 100) {
   c(0, cumsum(sample(c(1, -1), size = n_steps, replace = TRUE)))
 }
 
-walks <- data.frame(
-  time = rep(0:100, times = 20),
-  position = unlist(lapply(1:20, function(i) random_walk(100))),
-  walker = rep(1:20, each = 101)
-)
+walks <- data.frame()
+for (i in 1:20) {
+  one_walk <- data.frame(time = 0:100,
+                         position = random_walk(100), walker = i)
+  walks <- rbind(walks, one_walk)  # add this walk below the earlier walks
+}
 
 ggplot(walks, aes(time, position, group = walker)) +
   geom_line(alpha = 0.4, color = "steelblue") +
@@ -169,8 +181,15 @@ ggplot(walks, aes(time, position, group = walker)) +
 ```
 
 Each walker is different, but the *crowd* of walkers has a clear shape:
-it spreads out like a fan. **Individual randomness, collective pattern.**
-That is the core idea of everything we do this week.
+it spreads out like a fan.
+
+::: {.callout-important}
+## The big idea
+
+**Individual randomness can create a collective pattern.** Each path is
+unpredictable, but the group spreads into a clear fan. This is the core idea
+of everything we do this week.
+:::
 
 ::: {.callout-tip}
 ## Try it! — biased walkers
@@ -181,6 +200,8 @@ That is the core idea of everything we do this week.
 3. A stock price, a drunk person, an animal searching for food —
    which of these could a random walk be a model of? What does the model
    *leave out* in each case?
+
+Write down your guess before you run the code.
 :::
 
 ## What you learned

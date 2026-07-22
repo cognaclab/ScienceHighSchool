@@ -2,9 +2,6 @@
 title: 'Tutorial 3: An Agent That Learns (Interactive Notebook)'
 subtitle: Slot machines, trial and error, and the explore–exploit dilemma
 output:
-  html_document:
-    toc: true
-    df_print: paged
   html_notebook:
     toc: true
     theme: cosmo
@@ -110,7 +107,7 @@ what matters is the behaviour of its parameter $\beta$ (beta):
 
 ```{r}
 softmax <- function(values, beta) {
-  scores <- exp(beta * (values - max(values)))
+  scores <- exp(beta * (values - max(values)))  # subtracting max keeps numbers stable
   scores / sum(scores)
 }
 
@@ -126,28 +123,34 @@ Small $\beta$ = curious and random. Big $\beta$ = greedy and confident.
 
 Now we connect the loop: **look → choose → get reward → learn**, repeated.
 
+`integer(n_trials)` makes empty storage for the results. `sample.int(n, 1,
+prob)` is `sample()` for the whole numbers 1 to `n`. `rbinom(1, size = 1,
+prob = p)` is one coin flip: it returns 1 with probability `p`.
+
 ```{r}
 simulate_learner <- function(n_trials = 100,
                              alpha = 0.3,
                              beta = 5,
                              reward_probs = c(0.3, 0.7)) {
   n_options <- length(reward_probs)
-  Q <- rep(0, n_options)
+  Q <- rep(0, n_options)          # value estimates all start at 0
   choice <- integer(n_trials)
   reward <- integer(n_trials)
 
   for (t in 1:n_trials) {
-    p <- softmax(Q, beta)                                   # how attractive is each option?
-    choice[t] <- sample.int(n_options, size = 1, prob = p)  # choose one
-    reward[t] <- rbinom(1, size = 1, prob = reward_probs[choice[t]])  # world responds
-    Q[choice[t]] <- Q[choice[t]] + alpha * (reward[t] - Q[choice[t]]) # learn
+    p <- softmax(Q, beta)                                  # 1. how likely is each option?
+    choice[t] <- sample.int(n_options, size = 1, prob = p) # 2. pick one
+    reward[t] <- rbinom(1, size = 1, prob = reward_probs[choice[t]])  # 3. world responds
+    Q[choice[t]] <- Q[choice[t]] + alpha * (reward[t] - Q[choice[t]]) # 4. learn
   }
 
   data.frame(trial = 1:n_trials, choice = choice, reward = reward)
 }
 ```
 
-That's it. **A learning mind in 15 lines.** Let's watch it live its life:
+That's it. **A learning mind in about 20 lines.** Let's watch it live its life.
+`set.seed(1)` makes the random numbers repeat exactly, so your plot looks like
+ours.
 
 ```{r}
 library(ggplot2)
@@ -169,7 +172,9 @@ At the start it jumps around (exploring); later it settles on B (exploiting).
 One agent is noisy. Let's average **1000 agents** to see the typical pattern:
 
 ```{r}
+# Run 1000 agents, then glue their result tables into one big table.
 many <- do.call(rbind, lapply(1:1000, function(i) simulate_learner()))
+# For each trial, average across agents.
 curve <- aggregate(chose_best ~ trial,
                    data = transform(many, chose_best = as.numeric(choice == 2)),
                    FUN = mean)

@@ -32,7 +32,7 @@ What do you do?
 - New study method, or the usual one?
 
 ::: {.fragment}
-**Explore**（探索）or **exploit**（収穫/知識の活用）?
+**Explore / exploit**（探索・活用）?
 
 This is the *multi-armed bandit problem* —
 studied in psychology, neuroscience, economics, and AI.
@@ -50,7 +50,7 @@ $$Q_{\text{new}} = Q_{\text{old}} + \alpha \, (\text{reward} - Q_{\text{old}})$$
 ::: {.fragment}
 $(\text{reward} - Q)$ = **prediction error** = "how surprised am I?"
 
-$\alpha$ = **learning rate** = how much the newest experience counts
+$\alpha$ (alpha) = **learning rate** = how much the newest experience counts
 :::
 
 ## Fun fact: your brain does this
@@ -73,8 +73,8 @@ Always pick the best-looking option? Then you never fix your mistakes.
 
 **Softmax rule:** mostly pick the best, sometimes explore.
 
-- $\beta$ small → curious, random
-- $\beta$ big → greedy, confident
+- $\beta$ (beta) small → curious, random
+- $\beta$ (beta) big → greedy, confident
 
 ::: {.fragment}
 Two numbers, $\alpha$ and $\beta$ = the agent's **personality**
@@ -85,8 +85,8 @@ Two numbers, $\alpha$ and $\beta$ = the agent's **personality**
 ```r
 for (t in 1:100) {
   p      <- softmax(Q, beta)              # how attractive is each option?
-  choice <- sample(1:2, 1, prob = p)      # pick one
-  reward <- rbinom(1, 1, probs[choice])   # world responds
+  choice <- sample.int(n_options, size = 1, prob = p) # pick one
+  reward <- rbinom(1, 1, reward_probs[choice])        # world responds
   Q[choice] <- Q[choice] +
                alpha * (reward - Q[choice])  # learn from surprise
 }
@@ -101,7 +101,7 @@ for (t in 1:100) {
 source("R/bandit_functions.R")
 library(ggplot2)
 set.seed(1)
-many <- do.call(rbind, lapply(1:400, function(i) simulate_learner()))
+many <- do.call(rbind, lapply(1:1000, function(i) simulate_learner()))
 curve <- aggregate(chose_best ~ trial,
                    data = transform(many, chose_best = as.numeric(choice == 2)),
                    FUN = mean)
@@ -132,7 +132,21 @@ Then experiment:
 
 **Predict first. Then run.**
 
-<!-- Resume this deck after the hands-on tutorial. -->
+## Play the slot-machine game {.center}
+
+In the RStudio **Console**, run:
+
+```r
+source("R/play_bandit_game.R")
+play_game("YourName")
+```
+
+Play in solo mode: do not add `hints = TRUE` yet.
+
+Every player must use a different name. Using the same name will overwrite
+the earlier file.
+
+<!-- Resume this deck after Tutorial 3 and the solo slot-machine game. -->
 
 ## Day 2 wrap-up {.center}
 
@@ -155,7 +169,7 @@ Tomorrow, agents start **watching each other**.
 
 When does copying make a group smarter?
 
-When does it create herding（群衆行動）?
+When does it create herding（群れ行動・付和雷同）?
 
 ## Preview your group project
 

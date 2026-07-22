@@ -3,8 +3,8 @@
 Pick **one** question (or invent your own — often the best choice!).
 You have Day 3 afternoon to run simulations and make figures. Evenings are
 short this camp — Day 3 has a group dinner with researchers 17:30–19:00 —
-so export your figures and get a first draft of your slides going
-*before* 17:20, and only polish at the hotel. You present on Day 4
+so export your final figures by **15:45**. Get a first draft of your slides
+ready before **17:20**, and only polish at the hotel. You present on Day 4
 afternoon: **10 minutes + 5 minutes of questions**.
 
 Every project uses the tools you already have: `simulate_group()`,

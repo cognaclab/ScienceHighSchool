@@ -101,8 +101,8 @@ social_weights(counts, theta = 3)   # CONFORMITY: majority is exaggerated!
 
 With $\theta = 3$, a 70% majority attracts about 92% of copiers.
 Following the majority *more than proportionally* is called
-**conformist-biased copying**, and experiments show humans (and even fish
-and some ants) often do exactly this.
+**conformist transmission**, and experiments show humans (and even fish
+and bees) often do exactly this.
 
 ```{r, fig.height=3.5}
 grid <- expand.grid(share = seq(0.05, 0.95, by = 0.05),
@@ -210,6 +210,8 @@ Group intelligence for free!
 3. **The pure-copier trap**: try `sigma = 0.95`. Watch the tile plot from
    earlier — what goes wrong? Can a group learn if almost nobody collects
    their own information?
+
+Write down your guess before you run the code.
 :::
 
 ::: {.callout-important}
@@ -254,6 +256,9 @@ What if eight agents balance individual and social learning, but two agents
 are strong conformists? Predict before running: can two conformists pull the
 whole group toward a herd?
 
+`change_point = 76` makes the two options secretly swap at trial 76.
+Tutorial 5 explores this kind of changing world.
+
 ```{r, fig.height=4}
 sigma_by_agent <- c(rep(0.4, 8), rep(0.9, 2))
 theta_by_agent <- c(rep(1, 8), rep(4, 2))
@@ -264,6 +269,8 @@ mixed_social <- simulate_group(
   sigma = sigma_by_agent, theta = theta_by_agent, change_point = 76)
 ggplot(mixed_social, aes(trial, agent, fill = factor(choice))) +
   geom_tile() + geom_vline(xintercept = 75.5, linetype = "dashed") +
+  scale_fill_manual(values = c("1" = "grey80", "2" = "seagreen"),
+                    name = "choice", labels = c("A", "B")) +
   labs(title = "Eight balanced learners + two strong conformists")
 ```
 

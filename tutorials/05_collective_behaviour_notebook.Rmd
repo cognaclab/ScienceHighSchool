@@ -2,9 +2,6 @@
 title: 'Tutorial 5: The Wisdom and Madness of Crowds (Interactive Notebook)'
 subtitle: When groups are smarter than individuals — and when they are not
 output:
-  html_document:
-    toc: true
-    df_print: paged
   html_notebook:
     toc: true
     theme: cosmo
@@ -47,7 +44,7 @@ knitr::opts_knit$set(root.dir = project_root)
 
 ## Part 1: The wisdom of crowds
 
-In 1906, the scientist Francis Galton visited a country fair where ~800
+In 1906, the scientist Francis Galton visited a country fair where about 800
 people guessed the weight of an ox. Almost nobody was right. But the
 **average of all guesses** missed the true weight by less than 1%.
 
@@ -97,6 +94,8 @@ guesses <- rnorm(800, mean = truth * 0.7, sd = 150)  # everyone guesses low
 
 How wrong is the crowd average now? Can more people fix a shared bias?
 
+Write down your guess before you run the code.
+
 *This is why copying is dangerous: it makes people's errors similar.*
 :::
 
@@ -124,7 +123,7 @@ ggplot(sim, aes(trial, agent, fill = factor(choice))) +
   geom_tile() +
   geom_vline(xintercept = 75.5, color = "red", linewidth = 1) +
   scale_fill_manual(values = c("1" = "grey80", "2" = "seagreen"),
-                    name = "choice") +
+                    name = "choice", labels = c("A", "B")) +
   scale_y_continuous(breaks = 1:10) +
   labs(title = "Heavy copiers in a changing world (world flips at red line)")
 ```
@@ -134,8 +133,8 @@ learning ($\sigma = 0.7$), and strong conformity ($\theta = 4$). The group
 can coordinate quickly, but it can also become rigid.
 
 Look at what happens after the red line. The group often **keeps choosing
-the old option** — everyone copies everyone, and the majority feeds on
-itself. This is **herding**. (If your plot shows the group escaping,
+the old option** — everyone copies everyone, and the majority keeps making
+itself bigger. This is **herding**. (If your plot shows the group escaping,
 run it again a few times — sometimes they escape, often they get stuck.)
 
 ## Part 3: The full picture
@@ -161,20 +160,24 @@ ggplot(sweep, aes(trial, correct, color = factor(sigma))) +
        color = expression(sigma))
 ```
 
-Read this plot slowly — it is the punchline of the whole camp:
+Read this plot slowly. It shows the main message of the whole camp:
 
 - **Before the change**: moderate copiers ($\sigma = 0.3, 0.6$) usually beat
   individual learners ($\sigma = 0$). *Wisdom of crowds.*
 - **Just after the change**: stronger social learners ($\sigma = 0.6, 0.7$)
   fall hardest. The old majority is now wrong. *Madness of crowds.*
 - **Later**: some groups recover and some remain stuck. Here, $\sigma = 0.3$
-  gives a useful balance between social information and flexibility.
+  gives a useful balance between social information and flexibility. This is
+  a **trade-off**: copying helps early but can slow recovery later.
 
 In this experiment, only $\sigma$ changes. We hold $\alpha = 0.7$,
 $\beta = 5$, and $\theta = 4$ constant. The best strategy depends on both
-the environment and when we measure success.
+the environment and when we measure success. This change from many individual
+choices to a group-level pattern is **collective behaviour**.
 
-::: {.callout-note}
+::: {.callout-important}
+## The big idea
+
 Researchers at the University of St Andrews have tested exactly this with real
 people playing bandit games in groups online — and found the same pattern:
 conformist copying produces both collective wisdom and, in changing
@@ -297,13 +300,6 @@ Questions you can now investigate like a real cognitive scientist:
 - Did players with social hints do better than solo players?
 - Did anyone show conformity — following hints even after bad experiences?
 
-## What you learned
-
-- Independent errors cancel: crowds can be wiser than any individual
-- Copying makes errors *dependent* — herding in changing worlds
-- The same strategy can be smart or disastrous depending on the environment
-- Models become human behavioural science when compared with real behaviour — including yours
-
 ## Optional final activity: play together in real time
 
 The console game above uses choices saved from earlier games. The COSMOS
@@ -314,8 +310,10 @@ multiplayer task lets everyone play **at the same time** (real-time,
 1. Ask the instructor to choose a condition, then open the same link together:
    - [Individual condition — play without social information](http://tk2-127-63496.vs.sakura.ne.jp:8989/)
    - [Social condition — play with the group](http://tk2-127-63496.vs.sakura.ne.jp:8989/?condition=group)
-2. In the social condition, you have to open the link at roughly the same time with others so that everyone joins the same session (there is a 30-second window for waiting).
-3. Also in the social condition, you can see other players' **choices**, but not
+2. In the social condition, open the link at roughly the same time as the other
+   players. Everyone who enters within the 30-second waiting window joins the
+   same session.
+3. In the social condition, you can see other players' **choices**, but not
    their rewards. Start together and notice whether the group spreads out or
    forms a herd.
 4. At the end, download the session results. The social-condition download also
@@ -338,6 +336,13 @@ Possible presentation questions:
 - How did one player's choices change after seeing the group?
 - What extra columns in the social download could measure conformity
   (多数派同調傾向)?
+
+## What you learned
+
+- Independent errors cancel: crowds can be wiser than any individual
+- Copying makes errors *dependent* — herding in changing worlds
+- The same strategy can be smart or disastrous depending on the environment
+- Models become science when compared with real behaviour — including yours
 
 **Now: pick any questions, modify or write code, run simulations, make figures, and build your
 presentation.** See [`project/mini_project_menu.md`](../project/mini_project_menu.md).

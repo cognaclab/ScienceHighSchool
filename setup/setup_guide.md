@@ -60,7 +60,8 @@ and click **Source** (top-right of the editor panel).
 ## Step 5: Get these materials（教材の入手）
 
 - If you received a ZIP file: unzip it somewhere easy to find (e.g. Desktop)
-- If you use GitHub: click the green **Code** button → **Download ZIP**
+- If you use GitHub: click the green **Code** button → **Download ZIP**.
+  The ZIP includes the finished tutorial HTML pages.
 
 Then double-click **`ScienceHighSchool.Rproj`** — RStudio opens with
 everything in the right place.
@@ -88,6 +89,9 @@ your cursor in the code and press **Cmd/Ctrl + Enter**.
 
 If you only have a little time, read the HTML version. If you have more time,
 try the notebook too.
+
+After you change an `.Rmd` notebook, use RStudio's **Preview/Knit** button to
+rebuild it. For a `.qmd` file, run `quarto render` in the RStudio Terminal.
 
 ## Trouble? （うまくいかないときは）
 

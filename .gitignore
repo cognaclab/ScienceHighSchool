@@ -11,12 +11,14 @@ data/game_records/
 .Rdata
 Rplots.pdf
 
-# Quarto / rendered output
+# Quarto / rendered output (tutorial HTML is shipped to students)
 .quarto/
 /_site/
 *_files/
-tutorials/*.html
 slides/*.html
+# Quarto also emits redundant, non-self-contained copies of R notebooks.
+tutorials/*_notebook.html
+tutorials/*_cache/
 tutorials/*_notebook_cache/
 
 # OS

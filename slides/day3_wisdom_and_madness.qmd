@@ -14,7 +14,7 @@ execute:
   message: false
 ---
 
-## Yesterday {.center}
+## Today {.center}
 
 **Linked hands-on notebooks（演習用ノートブック）:**<br>
 `tutorials/04_social_learning_notebook.Rmd`<br>
@@ -24,7 +24,7 @@ You built an agent that **learns alone**.
 
 Today: agents that **watch each other**.
 
-Spoiler: societies appear — with all their glory and their bugs.
+Societies appear. They can be wise, and they can make mistakes.
 
 ## Why copy others?
 
@@ -40,15 +40,17 @@ language, science... and TikTok.
 
 ## Two knobs of a social learner
 
-$$p(\text{choice}) = (1-\sigma)\,p_{\text{own}} + \sigma\,p_{\text{social}}$$
+$$p(\text{choice}) = (1-\sigma)\,p_{\text{individual}} + \sigma\,p_{\text{social}}$$
 
-- $p_{\text{own}}$: your own experience
+- $p_{\text{individual}}$: your own experience
 - $p_{\text{social}}$: other people's choices
 
 - $\sigma$ (sigma): **how much** to rely on others (0 → 1)
 - $\theta$ (theta): **how strongly** to follow majorities
   - $\theta = 1$: copy in proportion
-  - $\theta > 1$: **conformity** — exaggerate the majority
+  - $\theta > 1$: **conformity**（同調）— exaggerate the majority
+
+$$p_{\text{social}} \propto (\text{count})^\theta$$
 
 ::: {.fragment}
 Different values = different *social strategies*.
@@ -75,7 +77,7 @@ What happens to the **whole group**?
 
 ## 1906: the ox and the crowd
 
-At a fair, ~800 people guessed the weight of an ox.
+At a fair, about 800 people guessed the weight of an ox.
 
 Nearly everyone was wrong...
 
@@ -95,6 +97,8 @@ library(ggplot2)
 set.seed(7)
 mix <- do.call(rbind, lapply(c(0, 0.6), function(s) {
   perf <- average_performance(n_reps = 25, n_agents = 10, n_trials = 100,
+                              reward_probs = c(0.3, 0.5),
+                              alpha = 0.3, beta = 5,
                               sigma = s, theta = 2)
   transform(perf, society = ifelse(s == 0, "no copying (sigma=0)", "copying (sigma=0.6)"))
 }))
@@ -106,15 +110,37 @@ ggplot(mix, aes(trial, correct, color = society)) +
 
 Good discoveries spread; individual mistakes get filtered out.
 
+## What if the world changes? {.center}
+
+The best option secretly swaps halfway through.
+
+Which learners will adapt faster?
+
+Write down your prediction before you see the result.
+
+## Hands-on 2: Tutorial 5 {.center}
+
+Open:
+
+`tutorials/05_collective_behaviour_notebook.Rmd`
+
+Find collective wisdom. Then change the world and look for herding.
+
+**Predict first. Then run.**
+
+<!-- Resume this deck after Tutorial 5. -->
+
 ## ...until the world changes
 
 ```{r}
 #| fig-height: 4.5
 set.seed(11)
-sweep <- do.call(rbind, lapply(c(0, 0.9), function(s) {
+sweep <- do.call(rbind, lapply(c(0, 0.7), function(s) {
   perf <- average_performance(n_reps = 25, n_agents = 10, n_trials = 150,
-                              sigma = s, theta = 2, change_point = 76)
-  transform(perf, society = ifelse(s == 0, "individual learners", "heavy copiers (sigma=0.9)"))
+                              reward_probs = c(0.5, 0.7),
+                              alpha = 0.7, beta = 5,
+                              sigma = s, theta = 4, change_point = 76)
+  transform(perf, society = ifelse(s == 0, "individual learners", "strong social learners (sigma=0.7)"))
 }))
 ggplot(sweep, aes(trial, correct, color = society)) +
   geom_line(linewidth = 1.2) +
@@ -125,14 +151,14 @@ ggplot(sweep, aes(trial, correct, color = society)) +
   theme_minimal(base_size = 18) + theme(legend.position = "bottom")
 ```
 
-## Herding（群衆行動）
+## Herding（群れ行動・付和雷同）
 
 After the change, heavy copiers keep choosing the **old** best option.
 
-Everyone copies everyone; the majority feeds on itself.
+Everyone copies everyone; the majority keeps making itself bigger.
 
 ::: {.incremental}
-- fashion bubbles 👟
+- fast-changing fashion trends 👟
 - stock market crashes 📉
 - misinformation cascades 📱
 :::
@@ -154,18 +180,6 @@ Today, **you** run this research program —
 with your own questions.
 :::
 
-## Hands-on 2: Tutorial 5 {.center}
-
-Open:
-
-`tutorials/05_collective_behaviour_notebook.Rmd`
-
-Find collective wisdom. Then change the world and look for herding.
-
-**Predict first. Then run.**
-
-<!-- Resume this deck after Tutorial 5. -->
-
 ## Your group project
 
 1. **Play the game yourselves** — `R/play_bandit_game.R`
@@ -180,9 +194,10 @@ Find collective wisdom. Then change the world and look for herding.
 
 1. The question — *why is it interesting?* (2 min)
 2. The model — *the rules of your toy world* (2 min)
-3. What you did (1 min)
-4. Results — *1–2 clear figures* (3 min)
-5. What it means + what you'd do next (2 min)
+3. Your prediction — *what did you expect?* (1 min)
+4. What you did (1 min)
+5. Results — *1–2 clear figures* (2 min)
+6. What it means + what you'd do next (2 min)
 
 ::: {.fragment}
 Template ready for you: `slides/final_presentation_template.qmd`
