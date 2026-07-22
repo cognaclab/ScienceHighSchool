@@ -138,13 +138,13 @@ From now on we will build all our models as functions.
 ## Experiment 3: The random walk
 
 Imagine a person standing on a line. Every second they flip a coin:
-heads → one step right (+1), tails → one step left (−1).
+heads → one step left (+1), tails → one step right (-1).
 Where are they after 100 steps?
 
 ```{r}
 steps <- sample(c(1, -1), size = 100, replace = TRUE)
-position <- cumsum(steps)   # cumulative sum: position after each step
-ggplot(data.frame(time = 1:100, position), aes(time, position)) +
+position <- c(0, cumsum(steps))   # cumulative sum: position after each step
+ggplot(data.frame(time = 0:100, position), aes(time, position)) +
   geom_line(color = "steelblue") +
   labs(title = "A random walk")
 ```
@@ -154,13 +154,13 @@ Now let's watch **20 walkers at once**:
 
 ```{r}
 random_walk <- function(n_steps = 100) {
-  cumsum(sample(c(1, -1), size = n_steps, replace = TRUE))
+  c(0, cumsum(sample(c(1, -1), size = n_steps, replace = TRUE)))
 }
 
 walks <- data.frame(
-  time = rep(1:100, times = 20),
+  time = rep(0:100, times = 20),
   position = unlist(lapply(1:20, function(i) random_walk(100))),
-  walker = rep(1:20, each = 100)
+  walker = rep(1:20, each = 101)
 )
 
 ggplot(walks, aes(time, position, group = walker)) +
