@@ -28,7 +28,7 @@ and present what it teaches us about *real* people
 We will work in English. We will help each other.
 :::
 
-## Who we are
+## Who we are {.smaller}
 
 **Computational Group Dynamics (COGNAC) Collaboration Unit**
 RIKEN Center for Brain Science
@@ -37,28 +37,31 @@ We study how *groups* of humans and
 animals learn and decide together.
 
 ::::: {.columns}
-::: {.column width="20%"}
-![](assets/wataru_toyokawa_image_02.png){height=115}
+::: {.column width="33.3%"}
+![](assets/wataru_toyokawa_image_02.png){height=95}
 
 **Wataru Toyokawa**
 :::
-::: {.column width="20%"}
-![](assets/Henri-Vandendriessche.jpg){height=115}
+::: {.column width="33.3%"}
+![](assets/Henri-Vandendriessche.jpg){height=95}
 
 **Henri Vandendriessche**
 :::
-::: {.column width="20%"}
-![](assets/alexandrawitt_web.jpg){height=115}
+::: {.column width="33.3%"}
+![](assets/alexandrawitt_web.jpg){height=95}
 
 **Alexandra Witt**
 :::
-::: {.column width="20%"}
-![](assets/ryutaro-mori.jpg){height=115}
+:::::
+
+::::: {.columns}
+::: {.column width="50%"}
+![](assets/ryutaro-mori.jpg){height=95}
 
 **Ryutaro Mori**
 :::
-::: {.column width="20%"}
-![](assets/seiya-nakata.jpg){height=115}
+::: {.column width="50%"}
+![](assets/seiya-nakata.jpg){height=95}
 
 **Seiya Nakata**
 :::
