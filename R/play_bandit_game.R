@@ -15,8 +15,8 @@
 # with some hidden probability. You have 40 turns. Find the good
 # machine and earn as many coins as you can!
 #
-# With hints = TRUE you also see which machine EARLIER players
-# chose most often on the same turn - social information.
+# With hints = TRUE you also see which machine SAVED EARLIER GAMES
+# chose most often on the same turn - real human social information.
 # Do the hints help? That is a research question you can test!
 # ============================================================
 
@@ -30,7 +30,29 @@
 
 .records_dir <- "data/game_records"
 
-# Read all earlier players' choices for social hints
+.record_path <- function(player_name, hints = FALSE) {
+  safe_name <- gsub("\\W", "", player_name)
+  if (nchar(safe_name) == 0) stop("player_name must contain a letter or number")
+  file.path(.records_dir,
+            sprintf("%s_%s.csv", safe_name, if (hints) "social" else "solo"))
+}
+
+list_game_records <- function() {
+  basename(list.files(.records_dir, pattern = "\\.csv$", full.names = TRUE))
+}
+
+delete_game_record <- function(player_name, hints = FALSE) {
+  target <- .record_path(player_name, hints)
+  if (!file.exists(target)) {
+    cat("No record found at:", target, "\n")
+    return(invisible(FALSE))
+  }
+  deleted <- file.remove(target)
+  if (deleted) cat("Deleted:", target, "\n")
+  invisible(deleted)
+}
+
+# Read all choices from saved earlier games for social hints
 .earlier_choices <- function() {
   files <- list.files(.records_dir, pattern = "\\.csv$", full.names = TRUE)
   if (length(files) == 0) return(NULL)
@@ -71,7 +93,7 @@ play_game <- function(player_name,
       if (length(turn_data) > 0) {
         counts <- tabulate(turn_data, nbins = 3)
         hint_shown[t] <- which.max(counts)
-        cat(sprintf("  HINT: earlier players most often chose machine %d here\n",
+        cat(sprintf("  HINT: saved earlier games most often chose machine %d here\n",
                     hint_shown[t]))
       }
     }
@@ -93,9 +115,7 @@ play_game <- function(player_name,
     hint = hint_shown
   )
   if (!dir.exists(.records_dir)) dir.create(.records_dir, recursive = TRUE)
-  outfile <- file.path(.records_dir,
-                       sprintf("%s_%s.csv", gsub("\\W", "", player_name),
-                               if (hints) "social" else "solo"))
+  outfile <- .record_path(player_name, hints)
   write.csv(result, outfile, row.names = FALSE)
   cat("Your data was saved to:", outfile, "\n")
   cat("(Later we will compare your play with our learning models!)\n")

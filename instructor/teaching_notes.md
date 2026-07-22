@@ -78,24 +78,24 @@ is no scheduled slot and no guarantee an instructor is even present
 ### Day 2 (the big teaching day) — course block 09:00–17:20, hard stop
 | Time | What | Materials |
 |---|---|---|
-| 09:00 | Lecture: Simulating Societies (~40 min + questions) | `slides/day2_am_models_and_agents.qmd` |
-| 09:45 | Hands-on: R basics | `tutorials/01_welcome_to_r_notebook.Rmd` |
-| 10:45 | Hands-on: toy worlds, Monte Carlo, random walks | `tutorials/02_simulating_randomness_notebook.Rmd` |
+| 09:00 | Welcome, orientation + Tutorial 2 overview (~30 min) | `slides/day2_am_models_and_agents.qmd` |
+| 09:30 | Hands-on: toy worlds, Monte Carlo, random walks | `tutorials/02_simulating_randomness_notebook.Rmd` |
+| 11:15 | Review + catch-up (use Tutorial 1 only for students who need an R refresher) | `tutorials/01_welcome_to_r_notebook.Rmd` |
 | 12:00 | Lunch (inside our block — schedule it yourselves) | — |
 | 13:00 | Lecture: An Agent That Learns (~30 min) | `slides/day2_pm_learning_agents.qmd` |
-| 13:45 | Hands-on: build the learning agent | `tutorials/03_learning_agents_notebook.Rmd` |
-| 15:45 | **Play the slot-machine game** (solo mode) — energiser! | `R/play_bandit_game.R` |
-| 16:15 | Preview of tomorrow + Q&A | — |
+| 13:30 | Hands-on: build the learning agent | `tutorials/03_learning_agents_notebook.Rmd` |
+| 15:30 | **Play the slot-machine game** (solo mode) — energiser! | `R/play_bandit_game.R` |
+| 16:00 | Resume deck: Day 2 wrap-up + preview the group-project menu | `slides/day2_pm_learning_agents.qmd`, `project/mini_project_menu.md` |
 | 17:15 | **Wrap up — hard stop.** HOKUSAI tour starts 17:30, joint with the other courses | — |
 
 ### Day 3 — course block 09:00–17:20, hard stop
 | Time | What | Materials |
 |---|---|---|
-| 09:00 | Lecture: Wisdom & Madness of Crowds (~40 min) | `slides/day3_wisdom_and_madness.qmd` |
-| 10:00 | Hands-on: social learning + collective behaviour | `tutorials/04_social_learning_notebook.Rmd`, `05_collective_behaviour_notebook.Rmd` |
+| 09:00 | Tutorial 4 overview, then hands-on social learning | `slides/day3_wisdom_and_madness.qmd`, `tutorials/04_social_learning_notebook.Rmd` |
+| 10:20 | Resume deck: Tutorial 5 overview, then hands-on collective behaviour | `slides/day3_wisdom_and_madness.qmd`, `tutorials/05_collective_behaviour_notebook.Rmd` |
 | 11:30 | Play the game again (social-hints mode); look at the group's data | `R/play_bandit_game.R` |
 | 12:15 | Lunch | — |
-| 13:15 | **Mini projects**: choose, predict, simulate | `project/mini_project_menu.md` |
+| 13:15 | Resume deck: launch mini projects; choose, predict, simulate | `slides/day3_wisdom_and_madness.qmd`, `project/mini_project_menu.md` |
 | 15:45 | Freeze results: **export every figure to `figs/` as PNG** (see below) | — |
 | 16:15 | Start the slides now, on-site — don't wait for the hotel | template or PowerPoint |
 | 17:15 | **Wrap up — hard stop.** Joint dinner with researchers 17:30–19:00 | — |

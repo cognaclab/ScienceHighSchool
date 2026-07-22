@@ -16,6 +16,9 @@ execute:
 
 ## The slot machine problem {.center}
 
+**Linked hands-on notebook（演習用ノートブック）:**<br>
+`tutorials/03_learning_agents_notebook.Rmd`
+
 Two machines. One pays 30%, one pays 70%.
 
 **You don't know which is which. 100 turns.**
@@ -112,9 +115,13 @@ ggplot(curve, aes(trial, chose_best)) +
 
 The same curve appears in humans, monkeys, pigeons, bees...
 
-## Your turn
+## Hands-on: Tutorial 3 {.center}
 
-Open `tutorials/03_learning_agents_notebook.Rmd` and build this agent yourself.
+Open:
+
+`tutorials/03_learning_agents_notebook.Rmd`
+
+Build the learning agent yourself.
 
 Then experiment:
 
@@ -125,10 +132,48 @@ Then experiment:
 
 **Predict first. Then run.**
 
-## Where this is going {.center}
+<!-- Resume this deck after the hands-on tutorial. -->
 
-Today your agent learns **alone**.
+## Day 2 wrap-up {.center}
 
-Tomorrow morning, agents will start **watching each other** —
+Today you built two levels of a model:
 
-and everything gets more interesting.
+::: {.incremental}
+1. a **world** made from probability
+2. an **agent** that learns from experience
+:::
+
+::: {.fragment}
+Tomorrow we add the missing part: **other agents**.
+:::
+
+## Tomorrow's question
+
+An agent learns **alone** today.
+
+Tomorrow, agents start **watching each other**.
+
+When does copying make a group smarter?
+
+When does it create herding（群衆行動）?
+
+## Preview your group project
+
+Tomorrow afternoon, your group will choose one question.
+
+Examples:
+
+- What is the best amount of copying?
+- Are bigger groups wiser?
+- When is conformity useful?
+- Do four real humans behave like our model?
+
+## Before you leave {.center}
+
+Open:
+
+`project/mini_project_menu.md`
+
+Choose **one question that interests you**.
+
+You do not need to decide today. Come back tomorrow with one idea.

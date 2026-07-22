@@ -1,5 +1,5 @@
 ---
-title: "Simulating Societies"
+title: "Welcome & Building Toy Worlds"
 subtitle: "RIKEN Wako Science Camp 2026 — Day 2 morning"
 author: "Computational Group Dynamics (COGNAC) Collaboration Unit, RIKEN CBS"
 format:
@@ -16,7 +16,10 @@ execute:
 
 ## Welcome! ようこそ！ {.center}
 
-**You + us, 3 days, one goal:**
+**Linked hands-on notebook（演習用ノートブック）:**<br>
+`tutorials/02_simulating_randomness_notebook.Rmd`
+
+**You + us, two teaching days, one goal:**
 
 build a tiny society inside a computer —
 and present what it teaches us about *real* people
@@ -96,21 +99,22 @@ keeping only what we care about
 A **simulation** = pressing **play** on a model
 :::
 
-## The plan for these two days
+## Our route through the camp
 
-| | |
+| When | What we will do |
 |---|---|
-| **Today** | learn R, build toy worlds (coins, random walks) |
-| **Tomorrow** | build an agent that *learns* |
-| **Day 3 AM** | let agents *copy each other* — culture and societies! |
-| **Day 3 PM** | group research project |
-| **Day 4 AM** | group research project |
-| **Day 4 PM** | you present — like real scientists |
+| **Before camp** | meet R in Tutorial 1 |
+| **Day 2 morning** | build toy worlds in Tutorial 2 |
+| **Day 2 afternoon** | build a learning agent in Tutorial 3 |
+| **Day 3 morning** | add social learning in Tutorials 4–5 |
+| **Day 3 afternoon** | investigate your own group question |
+| **Day 4** | finish, rehearse, and present like scientists |
 
 ## Our lab language: R
 
 - Free software used by scientists everywhere
 - You type commands, R answers, draws, simulates
+- Tutorial 1 gave you the basics; today we use them to do science
 
 ```{r}
 #| echo: true
@@ -122,6 +126,20 @@ Every simulation this week is built from
 little pieces of randomness like this.
 :::
 
+## Tutorial 2: three tools
+
+You will build:
+
+1. **Repeated experiments** — flip thousands of virtual coins
+2. **A function** — give a useful set of commands a name
+3. **A random walk** — make a path from uncertain steps
+
+::: {.fragment}
+The goal is not to memorise code.
+
+The goal is to ask: **what pattern appears when simple rules repeat?**
+:::
+
 ## Rules of the camp lab
 
 1. **Type it yourself** — copy-paste teaches nothing
@@ -129,6 +147,13 @@ little pieces of randomness like this.
 3. **Errors are normal** — red text happens to professionals daily
 4. **Ask anything** — asking is what researchers do all day
 
-::: {.fragment}
-**Let's start!** → open `tutorials/01_welcome_to_r_notebook.Rmd`
-:::
+## Hands-on: Tutorial 2 {.center}
+
+Open:
+
+`tutorials/02_simulating_randomness_notebook.Rmd`
+
+Work from top to bottom. **Predict before you run.**
+
+Need an R refresher? Ask us, or check
+`tutorials/01_welcome_to_r_notebook.Rmd`.

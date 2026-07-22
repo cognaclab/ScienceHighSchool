@@ -90,6 +90,9 @@ social_weights <- function(counts, theta = 1) {
 #   sigma = 0 -> pure individual learner (ignores everyone)
 #   sigma = 1 -> pure copier (never uses its own experience)
 #
+# alpha, beta, sigma, and theta may each be one number shared by all
+# agents, or a vector with one value per agent (individual differences).
+#
 # The environment can change! If change_point = 75, then from
 # trial 75 the reward probabilities switch to reward_probs_after.
 # (Use change_point = NA for a stable world.)
@@ -107,6 +110,13 @@ simulate_group <- function(n_agents = 10,
                            change_point = NA,
                            reward_probs_after = rev(reward_probs)) {
   n_options <- length(reward_probs)
+  if (length(alpha) == 1) alpha <- rep(alpha, n_agents)
+  if (length(beta) == 1) beta <- rep(beta, n_agents)
+  if (length(sigma) == 1) sigma <- rep(sigma, n_agents)
+  if (length(theta) == 1) theta <- rep(theta, n_agents)
+  if (any(c(length(alpha), length(beta), length(sigma), length(theta)) != n_agents)) {
+    stop("alpha, beta, sigma, and theta must each have length 1 or n_agents")
+  }
   Q <- matrix(0, nrow = n_agents, ncol = n_options)
   choice <- matrix(NA_integer_, nrow = n_trials, ncol = n_agents)
   reward <- matrix(NA_integer_, nrow = n_trials, ncol = n_agents)
@@ -119,18 +129,19 @@ simulate_group <- function(n_agents = 10,
 
     # social information = what everyone chose on the previous trial
     if (t == 1) {
-      p_social <- rep(1 / n_options, n_options)  # no information yet
+      counts <- NULL  # no social information yet
     } else {
       counts <- tabulate(choice[t - 1, ], nbins = n_options)
-      p_social <- social_weights(counts, theta)
     }
 
     for (i in 1:n_agents) {
-      p_individual <- softmax(Q[i, ], beta)
-      p <- (1 - sigma) * p_individual + sigma * p_social
+      p_social <- if (t == 1) rep(1 / n_options, n_options) else
+        social_weights(counts, theta[i])
+      p_individual <- softmax(Q[i, ], beta[i])
+      p <- (1 - sigma[i]) * p_individual + sigma[i] * p_social
       ch <- sample.int(n_options, size = 1, prob = p)
       rw <- rbinom(1, size = 1, prob = probs_now[ch])
-      Q[i, ch] <- Q[i, ch] + alpha * (rw - Q[i, ch])
+      Q[i, ch] <- Q[i, ch] + alpha[i] * (rw - Q[i, ch])
       choice[t, i] <- ch
       reward[t, i] <- rw
     }
@@ -141,7 +152,11 @@ simulate_group <- function(n_agents = 10,
     agent  = rep(1:n_agents, each = n_trials),
     choice = as.vector(choice),
     reward = as.vector(reward),
-    best   = rep(best, times = n_agents)
+    best   = rep(best, times = n_agents),
+    alpha  = rep(alpha, each = n_trials),
+    beta   = rep(beta, each = n_trials),
+    sigma  = rep(sigma, each = n_trials),
+    theta  = rep(theta, each = n_trials)
   )
 }
 

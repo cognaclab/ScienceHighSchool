@@ -38,7 +38,9 @@ First, let's give our agents the ability to watch each other.
 
 ## Setup
 
-Load the functions we built last time (they live in `R/bandit_functions.R`):
+Load the model functions from `R/bandit_functions.R`. Tutorial 3 introduced
+`softmax()` and `simulate_learner()`. Today we will meet the new group
+functions in the same file.
 
 ```{r}
 source("R/bandit_functions.R")
@@ -58,9 +60,16 @@ $$
 p(\text{copy option } k) \propto (\text{count}_k)^{\,\theta}
 $$
 
+`social_weights()` is a new helper function. In R, typing a function's name
+without `()` shows its recipe instead of running it:
+
 ```{r}
-social_weights   # look at the code (it's tiny)
+social_weights
 ```
+
+The first line of the recipe raises each count to the power $\theta$ (theta).
+The last line turns the weights into probabilities that add up to 1. The small
+`+ 0.1` keeps an option possible even when nobody chose it last time.
 
 The exponent $\theta$ is the personality of the copier:
 
@@ -117,8 +126,14 @@ $$
 The function `simulate_group()` in `R/bandit_functions.R` implements this.
 Open the file and read it — you already know every ingredient!
 
+We use a difficult world here. Option A pays 30% of the time. Option B pays
+50% of the time. The small difference makes it hard for one agent to discover
+which option is better.
+
 ```{r}
 sim <- simulate_group(n_agents = 10, n_trials = 100,
+                      reward_probs = c(0.3, 0.5),
+                      alpha = 0.3, beta = 5,
                       sigma = 0.3, theta = 2)
 head(sim)
 ```
@@ -129,7 +144,7 @@ Each row = one agent on one trial. Let's watch the whole group at once:
 ggplot(sim, aes(x = trial, y = agent, fill = factor(choice))) +
   geom_tile() +
   scale_fill_manual(values = c("1" = "grey80", "2" = "seagreen"),
-                    name = "choice", labels = c("A (30%)", "B (70%)")) +
+                    name = "choice", labels = c("A (30%)", "B (50%)")) +
   scale_y_continuous(breaks = 1:10) +
   labs(title = "10 agents learning together (green = better option)")
 ```
@@ -146,6 +161,8 @@ for each trial, the fraction of agents choosing the better option:
 #| cache: true
 mix <- do.call(rbind, lapply(c(0, 0.3, 0.6), function(s) {
   perf <- average_performance(n_reps = 30, n_agents = 10, n_trials = 100,
+                              reward_probs = c(0.3, 0.5),
+                              alpha = 0.3, beta = 5,
                               sigma = s, theta = 2)
   transform(perf, sigma = s)
 }))
@@ -171,8 +188,9 @@ Group intelligence for free!
 1. **Big city vs small village**: run the comparison with
    `n_agents = 3` and `n_agents = 30`. Does group size change how much
    copying helps?
-2. **The contrarian society**: set `theta = 0.5` (avoid the majority).
-   How does it perform?
+2. **Weak majority or minority seeking?** Set `theta = 0.5` first. This still
+   favours the majority, but weakly. Then set `theta = -1`, which favours the
+   minority. How does each society perform?
 3. **The pure-copier trap**: try `sigma = 0.95`. Watch the tile plot from
    earlier — what goes wrong? Can a group learn if almost nobody collects
    their own information?
@@ -185,7 +203,59 @@ $\sigma$ (how much to copy) and $\theta$ (how strongly to follow majorities)
 are **social learning strategies**. Evolution, development, and culture all
 tune these knobs. A central question in current research — including at
 RIKEN and in the COSMOS summer school — is: *which strategies are smart,
-and when?* Tomorrow you will answer part of that question yourselves.
+and when?* Later today, your group will investigate part of that question.
+:::
+
+## Optional appendix: agents can be different
+
+So far, every agent has had the same $\alpha$ (alpha), $\beta$ (beta),
+$\sigma$ (sigma), and $\theta$ (theta). Real people have **individual
+differences**（個人差）, also called **heterogeneity**.
+
+`simulate_group()` can take one value per agent for any of these parameters.
+First, here are different individual-learning parameters:
+
+```{r}
+alpha_by_agent <- rep(c(0.1, 0.7), each = 6)
+beta_by_agent <- rep(c(2, 8), each = 3, times = 2)
+
+set.seed(2026)
+mixed_agents <- simulate_group(
+  n_agents = 12, n_trials = 100, reward_probs = c(0.3, 0.5),
+  alpha = alpha_by_agent, beta = beta_by_agent,
+  sigma = 0.3, theta = 2)
+aggregate(reward ~ alpha + beta, data = mixed_agents, FUN = mean)
+```
+
+Here, agents have different combinations of learning speed and exploration.
+Predict which type will earn more. One run is noisy, so repeat the simulation
+many times before you make a conclusion.
+
+::: {.callout-tip}
+## Group-project seed: a mixed society
+
+What if eight agents balance individual and social learning, but two agents
+are strong conformists? Predict before running: can two conformists pull the
+whole group toward a herd?
+
+```{r}
+#| fig-height: 4
+sigma_by_agent <- c(rep(0.4, 8), rep(0.9, 2))
+theta_by_agent <- c(rep(1, 8), rep(4, 2))
+
+set.seed(2026)
+mixed_social <- simulate_group(
+  n_agents = 10, n_trials = 150, reward_probs = c(0.3, 0.5),
+  sigma = sigma_by_agent, theta = theta_by_agent, change_point = 76)
+ggplot(mixed_social, aes(trial, agent, fill = factor(choice))) +
+  geom_tile() + geom_vline(xintercept = 75.5, linetype = "dashed") +
+  labs(title = "Eight balanced learners + two strong conformists")
+```
+
+Compare this mixed society with a society where everyone has `sigma = 0.4`
+and `theta = 1`. Try changing the number of conformists. Does your answer
+change in a stable world (`change_point = NA`)? This could become your group
+project.
 :::
 
 ## What you learned
