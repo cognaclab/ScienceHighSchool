@@ -136,7 +136,7 @@ A **simulation** = pressing **play** on a model
 
 | Time | Activity | Facilitator |
 |---|---|---|
-| **10:00–10:30** | Say hello and get set up<br>Check that R and RStudio work | Teaching team |
+| **10:00–10:30** | Say hello and get set up<br>Check that R and RStudio work (Tutorial 1 if needed) | Teaching team |
 | **10:30–12:00** | Tutorial 2: Simulating randomness | Wataru |
 | **12:00–13:00** | Lunch | |
 | **13:00–14:30** | Tutorial 3: Reinforcement-learning agents | Henri *(to confirm)* |
