@@ -130,6 +130,50 @@ A **simulation** = pressing **play** on a model
 | **Day 3 afternoon** | investigate your own group question |
 | **Day 4** | finish, rehearse, and present like scientists |
 
+## Draft timetable: Day 2 {.smaller}
+
+**Tuesday, 28 July — Models and learning agents**
+
+| Time | Activity | Facilitator |
+|---|---|---|
+| **10:00–10:30** | Say hello and get set up<br>Check that R and RStudio work | Teaching team |
+| **10:30–12:00** | Tutorial 2: Simulating randomness | Wataru |
+| **12:00–13:00** | Lunch | |
+| **13:00–14:30** | Tutorial 3: Reinforcement-learning agents | Henri *(to confirm)* |
+| **14:30–16:00** | Hands-on work and discussion | Teaching team *(to confirm)* |
+
+::: {.fragment}
+This is our current plan. We may adjust it together.
+:::
+
+## Draft timetable: Day 3 {.smaller}
+
+**Wednesday, 29 July — Social learning and group projects**
+
+| Time | Activity | Facilitator |
+|---|---|---|
+| **10:00–11:30** | Tutorials 4–5: Social learning | Alex & Ryutaro *(to confirm)* |
+| **11:30–12:00** | Discuss and choose a group project | Teaching team |
+| **12:00–13:00** | Lunch | |
+| **Afternoon** | Work on group projects | Teaching team |
+
+::: {.fragment}
+You will turn a question into a small simulation study.
+:::
+
+## Draft timetable: Day 4 {.smaller}
+
+**Thursday, 30 July — Complete and share the project**
+
+| Time | Activity |
+|---|---|
+| **Before 15:00** | Finish the analysis, prepare the presentation, and rehearse<br>*(exact schedule to confirm)* |
+| **15:00** | Group presentation |
+
+::: {.fragment}
+The Day 4 preparation schedule is still open for discussion.
+:::
+
 ## Our lab language: R
 
 - Free software used by scientists everywhere
