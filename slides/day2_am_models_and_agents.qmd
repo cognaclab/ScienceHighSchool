@@ -142,6 +142,7 @@ A **simulation** = pressing **play** on a model
 | **13:00–14:30** | Tutorial 3: Reinforcement-learning agents | Henri *(to confirm)* |
 | **14:30–16:00** | Hands-on work and discussion | Teaching team *(to confirm)* |
 
+
 ::: {.fragment}
 This is our current plan. We may adjust it together.
 :::
@@ -156,6 +157,7 @@ This is our current plan. We may adjust it together.
 | **11:30–12:00** | Discuss and choose a group project | Teaching team |
 | **12:00–13:00** | Lunch | |
 | **Afternoon** | Work on group projects | Teaching team |
+| **17:30–19:00** | Reception | All |
 
 ::: {.fragment}
 You will turn a question into a small simulation study.
