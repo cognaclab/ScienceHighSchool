@@ -101,13 +101,14 @@ directions and *cancel out*.
 source("R/bandit_functions.R")
 library(ggplot2)
 set.seed(7)
-mix <- do.call(rbind, lapply(c(0, 0.6), function(s) {
+mix <- do.call(rbind, lapply(c(0, 0.7), function(s) {
   perf <- average_performance(n_reps = 25, n_agents = 10, n_trials = 100,
                               reward_probs = c(0.3, 0.5),
                               alpha = 0.3, beta = 5,
                               sigma = s, theta = 2)
-  transform(perf, society = ifelse(s == 0, "no copying (sigma=0)", "copying (sigma=0.6)"))
+  transform(perf, society = ifelse(s == 0, "no copying (sigma=0)","copying (sigma=0.7)"))
 }))
+mix$society = factor(mix$society, levels = c("no copying (sigma=0)","copying (sigma=0.7)"))
 ggplot(mix, aes(trial, correct, color = society)) +
   geom_line(linewidth = 1.2) + ylim(0, 1) +
   labs(y = "fraction choosing better option") +
@@ -146,8 +147,9 @@ sweep <- do.call(rbind, lapply(c(0, 0.7), function(s) {
                               reward_probs = c(0.5, 0.7),
                               alpha = 0.7, beta = 5,
                               sigma = s, theta = 4, change_point = 76)
-  transform(perf, society = ifelse(s == 0, "individual learners", "strong social learners (sigma=0.7)"))
+  transform(perf, society = ifelse(s == 0, "individual learners","social learners (sigma=0.7)"))
 }))
+sweep$society = factor(sweep$society, levels = c('individual learners','social learners (sigma=0.7)'))
 ggplot(sweep, aes(trial, correct, color = society)) +
   geom_line(linewidth = 1.2) +
   geom_vline(xintercept = 75.5, linetype = "dashed") +
