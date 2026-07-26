@@ -109,7 +109,9 @@ Watching groups is not enough — we need to know **why**.
 
 A map of Tokyo is not Tokyo.
 
-It is *useful because* it leaves things out.
+A perfectly accurate map of Tokyo would have to be the same size as Tokyo, making it useless.
+
+A map is *useful because* it leaves things out.
 
 ::: {.fragment}
 A **model** = a deliberately simplified world

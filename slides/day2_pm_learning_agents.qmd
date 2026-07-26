@@ -69,7 +69,7 @@ Simple models can be powerful.
 
 ## From values to choices: softmax
 
-Always pick the best-looking option? Then you never fix your mistakes.
+Always pick the best-looking option? Then you never fix wrong assumptions.
 
 **Softmax rule:** mostly pick the best, sometimes explore.
 
