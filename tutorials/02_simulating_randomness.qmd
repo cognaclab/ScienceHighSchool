@@ -118,22 +118,38 @@ name <- function(ingredients) {
 
 From now on we will build all our models as functions.
 
-## Experiment 3: The random walk
+## Experiment 3: Can we predict a cockroach's path?
 
-Imagine a person standing on a line. Every second they flip a coin:
-heads → one step right (+1), tails → one step left (−1).
-Where are they after 100 steps?
+![](assets/cockroach.png){width=240 fig-alt="A simple illustration of a cockroach seen from above"}
+
+Imagine a pet cockroach in a long, narrow corridor. Where will it go?
+Our toy model gives it two possible moves at each time step:
+
+- one step right (+1), with probability 0.5
+- one step left (−1), with probability 0.5
+
+Where might the cockroach be after 100 steps?
+
+::: {.callout-note}
+## A toy cockroach, not a real one
+
+Real cockroaches do not choose steps by flipping coins. They use their
+antennae. They respond to walls, light, food, and other signals. Our model
+leaves all of this out on purpose. It asks a smaller question:
+**what kind of path can randomness alone create?**
+:::
 
 ```{r}
 steps <- sample(c(1, -1), size = 100, replace = TRUE)
 position <- c(0, cumsum(steps))   # start at 0, then add each step
 ggplot(data.frame(time = 0:100, position), aes(time, position)) +
-  geom_line(color = "steelblue") +
-  labs(title = "A random walk")
+  geom_line(color = "sienna3") +
+  labs(title = "One possible cockroach path",
+       x = "time step", y = "position")
 ```
 
-Run it again — a completely different path every time!
-To make many walkers, we need a **for loop**（ループ・繰り返し）. A for
+Run it again. You will see a different possible path each time!
+To make many paths, we need a **for loop**（ループ・繰り返し）. A for
 loop repeats the code inside `{ }`. The value of `i` changes each time.
 
 ```{r}
@@ -142,47 +158,91 @@ for (i in 1:5) {
 }
 ```
 
-Now let's use a for loop to watch **20 walkers at once**:
+First, give our random-walk recipe a name:
 
 ```{r}
 random_walk <- function(n_steps = 100) {
   c(0, cumsum(sample(c(1, -1), size = n_steps, replace = TRUE)))
 }
 
-walks <- data.frame()
-for (i in 1:20) {
-  one_walk <- data.frame(time = 0:100,
-                         position = random_walk(100), walker = i)
-  walks <- rbind(walks, one_walk)  # add this walk below the earlier walks
-}
-
-ggplot(walks, aes(time, position, group = walker)) +
-  geom_line(alpha = 0.4, color = "steelblue") +
-  labs(title = "20 random walkers")
+random_walk(10)
 ```
 
-Each walker is different, but the *crowd* of walkers has a clear shape:
-it spreads out like a fan.
+Now let's simulate **2,000 possible cockroach paths**. We will draw 40 paths
+on the left, so that we can still see each line. We will use all 2,000 final
+positions on the right.
+
+```{r}
+set.seed(2)
+n_paths <- 2000
+walks <- data.frame()
+endpoints <- numeric(n_paths)
+for (i in 1:n_paths) {
+  one_path <- random_walk(100)
+  endpoints[i] <- one_path[101]
+  if (i <= 40) {
+    walks <- rbind(walks, data.frame(time = 0:100,
+                                     position = one_path, path = i))
+  }
+}
+mean(endpoints)
+```
+
+The **mean（平均）** is the average final position. Right and left are equally
+likely, so the theoretical **expected mean（期待値）** is 0.
+
+```{r, fig.width=10, fig.height=4.8}
+p_paths <- ggplot(walks, aes(time, position, group = path)) +
+  geom_line(alpha = 0.4, color = "sienna3") +
+  labs(title = "40 possible paths",
+       x = "time step", y = "position")
+
+p_density <- ggplot(data.frame(position = endpoints), aes(position)) +
+  geom_density(fill = "sienna3", alpha = 0.35) +
+  geom_vline(xintercept = mean(endpoints), color = "tomato", linewidth = 1.4) +
+  geom_vline(xintercept = 0, linetype = "dashed", linewidth = 0.7) +
+  labs(title = "Position after 100 steps",
+       subtitle = paste("red = sample mean", round(mean(endpoints), 2),
+                        "| dashed = expected mean 0"))
+
+grid::grid.newpage()
+print(p_paths, vp = grid::viewport(x = 0.31, width = 0.60))
+print(p_density, vp = grid::viewport(x = 0.82, width = 0.32))
+```
+
+We cannot predict one exact path. But the distribution（分布）on the right is
+stable. The red sample mean is almost on top of the dashed expected mean, 0.
+With many paths, positive and negative errors cancel each other.
+
+::: {.callout-note}
+## What becomes stable?
+
+We fixed the time at 100 steps. More simulated paths give us a more stable
+estimate of the distribution **at that time**. If we let each cockroach walk
+for longer, the distribution will become wider.
+:::
 
 ::: {.callout-important}
 ## The big idea
 
-**Individual randomness can create a collective pattern.** Each path is
-unpredictable, but the group spreads into a clear fan. This is the core idea
-of everything we do this week.
+**Individual outcomes can be unpredictable, while their average is
+predictable.** This is the law of large numbers again. When errors point in
+different directions, averaging can make them cancel. This is one reason
+why a crowd can sometimes be wise.
 :::
 
 ::: {.callout-tip}
-## Try it! — biased walkers
+## Try it! — fewer paths and a biased cockroach
 
-1. Change the walk so that steps are `+1` with probability 0.6 and `-1`
-   with probability 0.4 (hint: `prob = c(0.6, 0.4)` inside `sample()`).
-2. Plot 20 of these walkers. What changed about the fan?
-3. A stock price, a drunk person, an animal searching for food —
-   which of these could a random walk be a model of? What does the model
-   *leave out* in each case?
-
-Write down your guess before you run the code.
+1. Which sample mean will be more stable: 20 paths or 2,000 paths?
+   Write down your prediction.
+2. Change `n_paths` to `20`. Run both code blocks again. How did the red
+   line and density change?
+3. Restore `n_paths <- 2000`. Then give `+1` probability 0.6 and `-1`
+   probability 0.4. Hint: add `prob = c(0.6, 0.4)` inside `sample()`.
+   Predict where the red mean will move before you run the code.
+4. What information would make this a better model of a real cockroach?
+   Think about walls, light, food, or its previous step.
 :::
 
 ## What you learned
