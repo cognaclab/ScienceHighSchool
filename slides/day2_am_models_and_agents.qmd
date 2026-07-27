@@ -14,6 +14,35 @@ execute:
   message: false
 ---
 
+```{=html}
+<style>
+.scotland-photo-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.35rem 0.7rem;
+}
+
+.scotland-photo-grid .photo-card {
+  text-align: center;
+}
+
+.scotland-photo-grid .photo-card p {
+  margin: 0.12rem 0 0;
+}
+
+.scotland-photo-grid .photo-card p:first-child {
+  line-height: 0;
+}
+
+.scotland-photo-grid .photo-card img {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+  margin: 0;
+}
+</style>
+```
+
 ## Welcome! ようこそ！ {.center}
 
 **Linked hands-on notebook（演習用ノートブック）:**<br>
@@ -66,6 +95,120 @@ animals learn and decide together.
 **Seiya Nakata**
 :::
 :::::
+
+## A little about me {.smaller}
+
+::::: {.columns}
+::: {.column width="32%"}
+![](assets/wataru_toyokawa_headshot_crop.png){height=300 fig-alt="Portrait of Wataru Toyokawa"}
+:::
+
+::: {.column width="68%"}
+**Wataru Toyokawa (豊川 航)**
+
+- I grew up in **Sendai, Miyagi**.
+- I first studied **fisheries science（水産学）** at Hokkaido University.
+- Later, I became interested in how people learn and make decisions as a group.
+- I completed my PhD at Hokkaido University's Graduate School of Letters（文学研究科）.
+:::
+:::::
+
+::: {.notes}
+Suggested script — edit it as you like:
+
+"Hello. My name is Wataru Toyokawa. I grew up in Sendai. At university, I
+first studied fisheries science. Later, I became interested in how people
+learn and make decisions collectively as a group. Then I completed my PhD at Hokkaido University."
+:::
+
+## My research journey: Scotland {.smaller}
+
+After my PhD, I spent **four years** at the School of Biology,
+University of St Andrews in Scotland, as a JSPS postdoctoral fellow（学振特別研究員）.
+
+::::: {.columns}
+::: {.column width="24%"}
+![](assets/UK-map_web.jpg){width=92% fig-alt="Map showing St Andrews in Scotland"}
+
+**St Andrews, Scotland**
+:::
+
+::: {.column width="76%"}
+::::: {.scotland-photo-grid}
+::: {.photo-card}
+![](assets/st-andrews_web.jpg){fig-alt="View of St Andrews"}
+
+The university town
+:::
+::: {.photo-card}
+![](assets/highland-cattle_web.jpg){fig-alt="Highland cattle"}
+
+Highland cattle
+:::
+::: {.photo-card}
+![](assets/wt-isleofskye_web.jpg){fig-alt="Wataru on the Isle of Skye"}
+
+The Isle of Skye
+:::
+::: {.photo-card}
+![](assets/malted-barley-tasting-at-distillery_web.jpg){fig-alt="Wataru smelling malted barley at a whisky distillery"}
+
+A whisky distillery
+:::
+:::::
+:::
+:::::
+
+::: {.notes}
+Suggested script — add one personal detail:
+
+"After my PhD, I moved to Scotland. I spent four years at the University of
+St Andrews. I worked in the School of Biology. Scotland was such a beautiful country. If you have a chance, I would highly recommend to visit or study there!
+In St Andrews, I studied hoe people learn socially, and how such 'social learning' shapes behaviour of the group."
+:::
+
+## My research journey: Germany {.smaller}
+
+Next, I spent **five years** as a research scientist at the
+University of Konstanz.
+
+::::: {.columns}
+::: {.column width="24%"}
+![](assets/germany_web.jpg){width=95% fig-alt="Map showing Konstanz in Germany"}
+
+**Konstanz, Germany**
+:::
+
+::: {.column width="76%"}
+::::: {.columns}
+::: {.column width="26%"}
+![](assets/SUP_web.jpg){height=180 fig-alt="Stand-up paddleboarding near Konstanz"}
+
+Life by the lake
+:::
+::: {.column width="37%"}
+![](assets/cosmos2022_web.jpg){height=165 fig-alt="COSMOS summer school group in 2022"}
+
+COSMOS 2022
+:::
+::: {.column width="37%"}
+![](assets/cosmos2023_web.jpg){height=165 fig-alt="COSMOS summer school group in 2023"}
+
+COSMOS 2023
+:::
+:::::
+:::
+:::::
+
+::: {.notes}
+Suggested script — add one personal detail:
+
+"Next, I moved to Germany. I spent five years as a research scientist at the
+University of Konstanz. Konstanz is beside a large lake, so I enjoyed life
+near the water. I also helped teach students at the COSMOS summer school.
+[Add one short research topic or favourite memory here.]"
+:::
+
 
 ## Groups do amazing things
 
