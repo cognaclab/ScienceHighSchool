@@ -14,20 +14,71 @@ execute:
   message: false
 ---
 
+## About me
+
+Hello, my name is Henri Vandendriessche!
+
+I was born in France.
+
+![](assets/france1.png){fig-align="left"}
+
+## Where I studied
+
+I studied electronics and computer science in France and Germany
+
+![](assets/europe.png){fig-align="left"}
+
+## What I have been doing after my Master
+
+- I worked as an engineer for seven years at the Ecole Normale Supérieure in Paris in the Cognitive Science Department 
+- In 2021, I started my PhD in the Human Reinforcement Learning Team at the Laboratoire de Neurosciences Cognitives et Computationnelles (LNC2) in the same institution.
+- in 2025, After finishing my PhD I came to Japan in 2025
+
+
+## Outside of work
+
+What do I like?
+
+- Football
+- Reading books and comics/BD/manga
+- Playing video games
+- Spending time with my friends
+- Back in France I was in a music band and I was visiting people in prison every week.
+
+## How to represent an agent that learns? {.center}
+
+The most famous example is called the multi-armed bandit.
+The name comes from imagining a gambler in a Las Vegas Casino that wants to play slot machines.
+
+But which one?
+
+![](assets/Las_Vegas_slot_machines.jpg)
+
 ## The slot machine problem {.center}
 
 **Linked hands-on notebook（演習用ノートブック）:**<br>
 `tutorials/03_learning_agents_notebook.Rmd`
 
-Two machines. One pays 30%, one pays 70%.
+The simplest case is with only two machines. One pays 30% of the time, one pays 70% of the time.
 
 **You don't know which is which. 100 turns.**
 
 What do you do?
 
+## Trial and error
+
+You have to try the machines to see by yourself which machine is the good one
+
+- You try one and either you win (you get a reward) or you lose (you receive a punishment).
+
+::: {.incremental}
+- But one try is not enough, to have a reliable representation you need more information.
+- How many time do you need to sample each machine to be sure?
+:::
+
 ## You face this problem every day
 
-- New restaurant, or your favourite one?
+- New restaurant, or your favorite one?
 - New song, or your playlist?
 - New study method, or the usual one?
 
@@ -37,6 +88,43 @@ What do you do?
 This is the *multi-armed bandit problem* —
 studied in psychology, neuroscience, economics, and AI.
 :::
+
+
+## Psychology: brief history I
+
+**Edward Thorndike: Connectionism**
+
+His work is focused on whether animals could learn tasks through imitation or observation
+
+![](assets/Thorndike.png)
+
+
+## Psychology: brief history II
+
+**Ivan Pavlov: Classical conditioning**
+
+Pavlov Showed the relationship between environmental stimuli and behavioral responses.
+
+![](assets/Pavlov.png)
+
+
+## Psychology: brief history III
+
+**Burrhus F. Skinner: Operant conditioning**
+
+Voluntary behaviors in animals can be reinforced with reward and decreased (even extinct) with punishment. 
+
+![](assets/Skinner.png)
+
+## Psychology: brief history VI
+
+**Robert A. Rescorla: Learning rule**
+
+He conceptualized with Allan R. Wagner the first mathematical formalization of the conditioning phenomenon. 
+
+![](assets/Rescorla.png)
+
+## How to 
 
 ## Let's build a mind (a small one)
 
