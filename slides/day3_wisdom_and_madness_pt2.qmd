@@ -12,17 +12,310 @@ execute:
   echo: false
   warning: false
   message: false
+header-includes:
+  - |
+    <style>
+    /* ---------- About-me slides ---------- */
+    
+    .about-stack {
+      height: 570px;
+    }
+    
+    .about-card {
+      width: 100%;
+      height: 100%;
+      text-align: center;
+    }
+    
+    .about-card p {
+      margin-top: 0;
+    }
+    
+    /* A single photograph, centred near the bottom */
+    .about-card img.single-bottom {
+      position: absolute;
+      left: 50%;
+      bottom: 25px;
+      transform: translateX(-50%);
+      width: auto;
+      max-width: 42%;
+      max-height: 450px;
+      object-fit: contain;
+    }
+    
+    /* Research-stay layout */
+    .research-stays {
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: opacity 0.5s ease;
+    }
+    
+    .research-stays .columns {
+      margin-top: 0.8em;
+    }
+    
+    .research-stays .column img {
+      display: block;
+      margin: 0.5em auto 0;
+      max-height: 230px;
+      width: auto;
+    }
+    
+    .research-stays {
+      font-size: 0.85em;
+    }
+    
+    .research-stays p {
+      margin-bottom: 0.35em;
+    }
+    
+    
+    /*
+    When the invisible final fragment becomes visible,
+    fade out the complete research-stay group.
+    */
+    .research-stays:has(.research-out.visible) {
+      opacity: 0;
+    }
+    
+    .research-out {
+      display: none;
+    }
+    
+    .waterfall-slide {
+      position: relative;
+      height: 570px;
+      overflow: hidden;
+    }
+    
+    .waterfall-slide img.wf {
+      position: absolute;
+      z-index: 1;
+      width: 22%;
+      max-height: 190px;
+      object-fit: cover;
+      border-radius: 8px;
+      pointer-events: none;
+    }
+    
+    .waterfall-slide img.wf-center {
+      position: absolute;
+      z-index: 2;
+      left: 50%;
+      top: 25%;
+      width: 39%;
+      max-height: 330px;
+      transform: translate(-50%, -50%) rotate(-1deg);
+      object-fit: cover;
+      border-radius: 10px;
+      pointer-events: none;
+    }
+    
+    .waterfall-slide img.wf1 {
+      top: 5px;
+      left: 0;
+      transform: rotate(-4deg);
+    }
+    
+    .waterfall-slide img.wf2 {
+      top: 15px;
+      right: 0;
+      transform: rotate(3deg);
+    }
+    
+    .waterfall-slide img.wf3 {
+      top: 210px;
+      left: 1%;
+      transform: rotate(2deg);
+    }
+    
+    .waterfall-slide img.wf4 {
+      top: 205px;
+      right: 2%;
+      transform: rotate(-5deg);
+    }
+    
+    .waterfall-slide img.wf5 {
+      bottom: 0;
+      left: 13%;
+      transform: rotate(-2deg);
+    }
+    
+    .waterfall-slide img.wf6 {
+      bottom: 5px;
+      right: 12%;
+      transform: rotate(4deg);
+    }
+    </style>
 ---
+
+## But first...
+
+Hi!
+
+::: {.fragment data-fragment-index="0"}
+
+I'm Alex, and I get to be your instructor for this section :)
+
+:::
+
+::: {.fragment data-fragment-index="1"}
+
+Here are a few facts about me.
+
+:::
+
+
+## About me! :)
+
+::: {.r-stack .about-stack}
+
+::: {.fragment .fade-out .about-card data-fragment-index="1"}
+
+I was born and raised in Germany, but I'm actually half German 🇩🇪 half Hungarian 🇭🇺 (not that I speak any Hungarian orz)
+
+![](assets/alfeld.png){.single-bottom}
+
+:::
+
+
+::: {.fragment .fade-in-then-out .about-card data-fragment-index="1"}
+
+I studied Psychology for my Bachelor of Science in Braunschweig.
+
+![](assets/braunschweig.png){.single-bottom}
+
+:::
+
+
+::: {.fragment .fade-in-then-out .about-card data-fragment-index="2"}
+
+Then I moved to Göttingen for a Master of Science in Neuroscience 🧠
+
+![](assets/gottingen.png){.single-bottom}
+
+:::
+
+
+::: {.fragment .fade-in-then-out .about-card data-fragment-index="3"}
+
+And finally I did my PhD in Cognitive Science in Tübingen 🎓
+
+![](assets/tuebingen.png){.single-bottom}
+
+:::
+
+
+::: {.fragment .fade-in-then-out .about-card data-fragment-index="4"}
+
+I finished my PhD less than a year ago.
+
+![](assets/grad.webp){.single-bottom}
+
+:::
+
+
+::: {.fragment .fade-in-then-out .about-card data-fragment-index="5"}
+And then started my position at RIKEN this January 🇯🇵
+
+![](assets/japan.webp){.single-bottom}
+
+:::
+
+
+::: {.research-stays}
+
+::: {.fragment data-fragment-index="6"}
+
+I did not do any of my degrees abroad, but I got to do research stays in other countries twice.
+
+:::
+
+:::: {.columns}
+
+::: {.column width="50%"}
+
+::: {.fragment data-fragment-index="7"}
+
+I was in Wales for 2 months during my Bachelor's degree 🏴󠁧󠁢󠁷󠁬󠁳󠁿󠁧󠁢󠁷󠁬󠁳󠁿
+
+![](assets/aber_falls.jpg){width="40%"}
+
+:::
+
+:::
+
+
+::: {.column width="50%"}
+
+::: {.fragment data-fragment-index="8"}
+
+And in Princeton for 3 months during my PhD 🇺🇸
+
+![](assets/princeton.webp){width="55%"}
+
+:::
+
+:::
+
+::::
+
+
+::: {.fragment data-fragment-index="9"}
+
+If you ever get the chance to go abroad for your studies, I think you should take it! It is lots of fun :)
+
+:::
+
+::: {.fragment .research-out data-fragment-index="10"}
+
+:::
+
+:::
+
+
+::: {.fragment .fade-in-then-out data-fragment-index="10"}
+
+Finally, and you might have noticed this already, I really like waterfalls.
+
+While I am in Japan, I would like to visit all of Japan's official
+“Top 100 Waterfalls.”
+
+When I am not hiking to the next waterfall, I enjoy playing video
+games 🎮 and baking!
+
+:::
+
+:::
+
+
+## Waterfalls! {auto-animate="true"}
+
+::: {.waterfall-slide}
+
+![](assets/waterfall1.jpg){.wf .wf1}
+![](assets/waterfall2.jpg){.wf .wf2}
+![](assets/waterfall3.jpg){.wf .wf3}
+![](assets/waterfall4.jpg){.wf .wf4}
+![](assets/waterfall5.jpg){.wf .wf5}
+![](assets/waterfall6.jpg){.wf .wf6}
+
+![](assets/waterfall7.jpg){.wf-center}
+
+:::
+
+
 
 ## From learners to crowds {.center}
 
-You now have agents that can copy.
+Our agents can copy now.
 
-What happens to the **whole group**?
+But what happens at the **group-level**?
 
 ## 1906: the ox and the crowd
 
-At a fair, about 800 people guessed the weight of an ox.
+At a market, about 800 people guessed the weight of an ox.
 
 Nearly everyone was wrong...
 
@@ -86,7 +379,7 @@ The best option secretly swaps halfway through.
 
 Which learners will adapt faster?
 
-Write down your prediction before you see the result.
+What do you think?
 
 ## Hands-on 2: Tutorial 5 {.center}
 
@@ -166,7 +459,7 @@ Everyone copies everyone; the majority keeps making itself bigger.
 :::
 
 
-## This is real science, done here
+## This is part of ongoing research, in this lab!
 
 Real people played this game in groups, online
 (Toyokawa, Whalen & Laland 2019, *Nature Human Behaviour*):
@@ -175,8 +468,11 @@ Real people played this game in groups, online
 - strong conformity + changing world → herding ❌
 
 ::: {.fragment}
-Today, **you** run this research program —
-with your own questions.
+In my research, I am trying to find out how crowds can be wise when they interact.
+:::
+
+::: {.fragment}
+But today, **you** will be running your own research program!
 :::
 
 ## Your group project
@@ -195,8 +491,9 @@ with your own questions.
 2. The model — *the rules of your toy world* (2 min)
 3. Your prediction — *what did you expect?* (1 min)
 4. What you did (1 min)
-5. Results — *1–2 clear figures* (2 min)
+5. Results — *1–2 clear figures* (1 min)
 6. What it means + what you'd do next (2 min)
+7. About your time at RIKEN — *any fun memories? Inside jokes?*
 
 ## Time to get started!
 Template ready for you: `slides/final_presentation_template.qmd`

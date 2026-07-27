@@ -86,17 +86,28 @@ ggplot(data.frame(sizes, errors), aes(sizes, errors)) +
 ::: {.callout-tip}
 ## Try it! — break the wisdom
 
-The magic needs errors that cancel out. Make everyone share the *same bias*:
+The magic needs errors that cancel out. 
 
-```r
-guesses <- rnorm(800, mean = truth * 0.7, sd = 150)  # everyone guesses low
-```
+Can you make everyone share a bias? How does this affect the result? Does the number of people change it?
 
 How wrong is the crowd average now? Can more people fix a shared bias?
 
 Write down your guess before you run the code.
 
-*This is why copying is dangerous: it makes people's errors similar.*
+<details>
+  <summary>Click here for a hint</summary>
+  If we multiply the average we sample from with a factor, we can affect the mean guessed value. 
+  Here, people would systematically underestimate the true value.
+  ``guesses <- rnorm(800, mean = truth * 0.7, sd = 150)``
+</details>
+
+<details>
+  <summary>ネタバレ注意! Click after you have tested yourself.</summary>
+  *This is why copying can be dangerous: it makes people's errors similar.*
+  *But similar errors do not cancel out when averaging!*
+</details>
+
+
 :::
 
 ## Part 2: When the world changes
@@ -110,7 +121,7 @@ At `change_point = 76`, they secretly **swap**, so A becomes better.
 Nobody is told.
 
 ```{r}
-source("R/bandit_functions.R")
+source(paste0(project_root,'/R/bandit_functions.R'))
 set.seed(2026)
 
 sim <- simulate_group(n_agents = 10, n_trials = 150,
@@ -132,10 +143,14 @@ This example combines a fast learning rate ($\alpha = 0.7$), much social
 learning ($\sigma = 0.7$), and strong conformity ($\theta = 4$). The group
 can coordinate quickly, but it can also become rigid.
 
-Look at what happens after the red line. The group often **keeps choosing
-the old option** — everyone copies everyone, and the majority keeps making
-itself bigger. This is **herding**. (If your plot shows the group escaping,
-run it again a few times — sometimes they escape, often they get stuck.)
+What happens after the environment changes?
+
+<details>
+  <summary>ネタバレ注意! Click after you have tested yourself.</summary>
+  Even after the environment changes, the group often **keeps choosing
+  the old option** — everyone copies everyone, and the majority keeps making
+  itself bigger. This is **herding**.
+</details>
 
 ## Part 3: The full picture
 
@@ -159,9 +174,10 @@ ggplot(sweep, aes(trial, correct, color = factor(sigma))) +
        y = "fraction choosing the (currently) best option",
        color = expression(sigma))
 ```
+How would you interpret these results? Let's test ourselves before revealing the summary!
 
-Read this plot slowly. It shows the main message of the whole camp:
-
+<details>
+  <summary>ネタバレ注意! Click after you have tested yourself.</summary>
 - **Before the change**: moderate copiers ($\sigma = 0.3, 0.6$) usually beat
   individual learners ($\sigma = 0$). *Wisdom of crowds.*
 - **Just after the change**: stronger social learners ($\sigma = 0.6, 0.7$)
@@ -169,6 +185,7 @@ Read this plot slowly. It shows the main message of the whole camp:
 - **Later**: some groups recover and some remain stuck. Here, $\sigma = 0.3$
   gives a useful balance between social information and flexibility. This is
   a **trade-off**: copying helps early but can slow recovery later.
+</details>
 
 In this experiment, only $\sigma$ changes. We hold $\alpha = 0.7$,
 $\beta = 5$, and $\theta = 4$ constant. The best strategy depends on both
@@ -182,7 +199,7 @@ Researchers at the University of St Andrews have tested exactly this with real
 people playing bandit games in groups online — and found the same pattern:
 conformist copying produces both collective wisdom and, in changing
 environments, herding. See Toyokawa, Whalen & Laland (2019),
-*Nature Human Behaviour* — ask your instructors about it!
+*Nature Human Behaviour*.
 :::
 
 ::: {.callout-tip}
@@ -208,7 +225,7 @@ Choose one (or more!), then write your prediction before changing the code.
 ## Part 4: From models to real behaviour — you are the data
 
 Models are only half of human science. The other half: **data from real people**.
-Conveniently, four real people are attending this camp.
+The good news is, we have four real people attending this camp!
 
 The game has three machines and 40 turns. Each machine has a hidden chance
 of paying one coin. Your goal is to earn as many coins as possible.
@@ -277,7 +294,7 @@ student's record.
 After everyone finishes, compare your learning curve with the model's:
 
 ```{r, eval=FALSE}
-files <- list.files("data/game_records", pattern = "\\.csv$", full.names = TRUE)
+files <- list.files(paste0(project_root,"/data/game_records"), pattern = "\\.csv$", full.names = TRUE)
 keep <- c("player", "mode", "trial", "choice", "reward")
 human <- do.call(rbind, lapply(files, function(f) read.csv(f)[keep]))
 
@@ -340,7 +357,7 @@ Possible presentation questions:
 ## What you learned
 
 - Independent errors cancel: crowds can be wiser than any individual
-- Copying makes errors *dependent* — herding in changing worlds
+- Copying makes errors *dependent* — dependent errors can no longer cancel out.
 - The same strategy can be smart or disastrous depending on the environment
 - Models become science when compared with real behaviour — including yours
 
