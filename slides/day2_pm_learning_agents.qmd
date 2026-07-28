@@ -52,7 +52,7 @@ The name comes from imagining a gambler in a Las Vegas Casino that wants to play
 
 But which one?
 
-![](assets/Las_Vegas_slot_machines.jpg)
+![](assets/Las_Vegas_slot_machines.jpg){fig-align="center"}
 
 ## The slot machine problem {.center}
 
@@ -124,7 +124,58 @@ He conceptualized with Allan R. Wagner the first mathematical formalization of t
 
 ![](assets/Rescorla.png)
 
-## How to 
+## How to transfer all of this into a mathematical model?
+
+::: {.incremental}
+- Using **Reinforcement learning**
+- Reinforcement learning (RL) is a sub-field of AI focused on how an intelligent agent should take actions in a dynamic environment in order to maximize a reward signal.
+:::
+
+
+## RL, an intuitive description I
+
+- An agent in a new environment
+
+![](assets/RL_1.png)
+
+
+## RL, an intuitive description II
+
+- This agent starts interacting with the environment
+
+![](assets/RL_2.png)
+
+## RL, an intuitive description III
+
+- And starts accumulating some information about the environment
+
+![](assets/RL_3.png)
+
+
+## RL, an intuitive description VI
+
+- Until he builds an accurate representation
+
+![](assets/RL_4.png)
+
+
+## RL, an intuitive description VI
+
+- To do so the agent will need
+
+![](assets/RL_5.png)
+
+## RL, an intuitive description V
+
+- What the agent need to explore the environment is:
+
+::: {.incremental}
+1. A **prediction error** signal to determine how surprising or relevant is the new information.
+2. A **learning rule** store important new information in the memory.
+3. A **decision rule** to decide which action to perform based the agent memory.
+:::
+
+
 
 ## Let's build a mind (a small one)
 
@@ -155,9 +206,17 @@ This simple equation helped neuroscientists
 Simple models can be powerful.
 :::
 
+## In the brain
+
+- Wolfram Schultz in an article in 1997 showed that dopamine neurons signal errors in reward prediction.
+
+![](assets/Schultz_dopamine.png)
+
+
+
 ## From values to choices: softmax
 
-Always pick the best-looking option? Then you never fix wrong assumptions.
+What is the best decision rule? Always pick the best-looking option? Then you never fix wrong assumptions.
 
 **Softmax rule:** mostly pick the best, sometimes explore.
 
